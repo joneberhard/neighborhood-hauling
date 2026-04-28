@@ -1,0 +1,77 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-yellow: #ffd400;
+  --color-brand-yellow-soft: #fff8d6;
+  --color-brand-black: #0a0a0a;
+  --color-ink: #111111;
+  --font-display: "Anton", "Impact", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    font-family: var(--font-mono);
+    background: var(--color-brand-black);
+    color: white;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: 0.01em;
+  }
+}
+
+@layer components {
+  .display {
+    font-family: var(--font-display);
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.005em;
+    line-height: 0.95;
+  }
+  .skew-tag {
+    display: inline-block;
+    transform: skew(-12deg);
+    padding: 0.5rem 1.5rem;
+  }
+  .skew-tag > * {
+    display: inline-block;
+    transform: skew(12deg);
+  }
+  .btn-skew {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transform: skew(-12deg);
+    padding: 0.9rem 1.75rem;
+    font-family: var(--font-display);
+    font-style: italic;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: transform 0.15s ease, background 0.15s ease;
+  }
+  .btn-skew:hover {
+    transform: skew(-12deg) translateY(-2px);
+  }
+  .btn-skew > span {
+    display: inline-block;
+    transform: skew(12deg);
+  }
+  .stripes {
+    background-image: repeating-linear-gradient(
+      45deg,
+      var(--color-brand-yellow-soft),
+      var(--color-brand-yellow-soft) 14px,
+      #ffffff 14px,
+      #ffffff 28px
+    );
+  }
+  .card-shadow {
+    box-shadow: 10px 10px 0 0 #0a0a0a;
+  }
+}

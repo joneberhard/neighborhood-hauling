@@ -1,0 +1,171 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+
+const sent = Astro.url.searchParams.get("sent") === "1";
+---
+
+<Layout title="Contact Neighborhood Hauling | Get a Free Junk Removal Quote" description="Call, email, or send photos for a fast, flat-rate junk removal quote. Serving Bluffdale, Salt Lake County, and Utah County. (801) 516-4149.">
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="GET IN TOUCH"
+      title="Get a Fast"
+      highlight="Free Quote."
+      description="Send a photo of what's going, tell us where you are, and we'll have a flat quote back within minutes during business hours. Same-day pickups when our schedule allows."
+      breadcrumb={[{ label: "Home", href: "/" }, { label: "Contact", href: "/contact" }]}
+    />
+
+    {sent && (
+      <div class="bg-brand-yellow border-y-4 border-brand-black py-5">
+        <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 flex items-center gap-4">
+          <div class="size-10 rounded-full bg-brand-black flex items-center justify-center shrink-0">
+            <svg viewBox="0 0 24 24" class="w-6 h-6 text-brand-yellow" fill="currentColor"><path d="M9 18l-6-6 1.5-1.5L9 15l11-11L21.5 5.5z"/></svg>
+          </div>
+          <div>
+            <p class="display italic text-brand-black text-xl">Got it &mdash; we'll be in touch soon.</p>
+            <p class="font-mono text-xs text-brand-black/80 mt-1">If you need a quote in the next hour, call (801) 516-4149.</p>
+          </div>
+        </div>
+      </div>
+    )}
+
+    <section class="bg-brand-black py-16 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div class="grid lg:grid-cols-[1fr_1.4fr] gap-10 lg:gap-14 items-start">
+          <div class="space-y-6">
+            <a href="tel:+18015164149" class="block bg-brand-yellow text-brand-black p-6 hover:translate-y-[-3px] transition-transform card-shadow">
+              <div class="font-mono text-[10px] tracking-widest">CALL US</div>
+              <div class="display italic text-3xl mt-1">(801) 516-4149</div>
+              <div class="font-mono text-xs mt-2 text-brand-black/70">Fastest way to reach Mou. Call or text.</div>
+            </a>
+
+            <a href="mailto:team@neighborhoodhaulingut.com" class="block bg-white text-brand-black p-6 hover:translate-y-[-3px] transition-transform card-shadow">
+              <div class="font-mono text-[10px] tracking-widest">EMAIL</div>
+              <div class="display italic text-xl mt-1 break-all">team@neighborhoodhaulingut.com</div>
+              <div class="font-mono text-xs mt-2 text-ink/70">Replies within a few hours during business hours.</div>
+            </a>
+
+            <div class="bg-brand-black border-2 border-brand-yellow text-white p-6">
+              <div class="font-mono text-[10px] tracking-widest text-brand-yellow">VISIT THE SHOP</div>
+              <div class="font-mono text-sm mt-2 leading-relaxed">
+                Neighborhood Barbers<br />
+                564 Lewski Ln<br />
+                Bluffdale, UT 84065
+              </div>
+              <div class="font-mono text-xs mt-3 text-white/60">
+                Same address as Mou's barbershop. Walk in, get a fade, ask about the haul.
+              </div>
+            </div>
+
+            <div class="bg-brand-black border-2 border-white/20 text-white p-6">
+              <div class="font-mono text-[10px] tracking-widest text-brand-yellow">HOURS</div>
+              <ul class="font-mono text-sm mt-3 space-y-1.5">
+                <li class="flex justify-between"><span>Mon &ndash; Fri</span><span>7a &ndash; 7p</span></li>
+                <li class="flex justify-between"><span>Saturday</span><span>8a &ndash; 5p</span></li>
+                <li class="flex justify-between"><span>Sunday</span><span class="text-white/50">By appointment</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="bg-brand-yellow text-brand-black p-7 sm:p-10 card-shadow relative">
+            <div class="absolute -top-5 right-6 skew-tag bg-brand-black text-brand-yellow">
+              <span class="display italic text-lg">Get Fast Estimate</span>
+            </div>
+
+            <!--
+              Contact form:
+              Posts to Web3Forms (https://web3forms.com) — a free static-form
+              service. To enable submissions:
+                1. Go to web3forms.com and enter team@neighborhoodhaulingut.com
+                2. They email you a free access key (no account, no fee)
+                3. Replace YOUR_WEB3FORMS_ACCESS_KEY below with that key
+              Until then the form will fail to submit. The phone number on the
+              same page is the working fallback.
+            -->
+            <form
+              action="https://api.web3forms.com/submit"
+              method="POST"
+              class="space-y-5 mt-3"
+            >
+              <input type="hidden" name="access_key" value="YOUR_WEB3FORMS_ACCESS_KEY" />
+              <input type="hidden" name="subject" value="New Quote Request — Neighborhood Hauling" />
+              <input type="hidden" name="from_name" value="Neighborhood Hauling Site" />
+              <input type="hidden" name="redirect" value="https://neighborhood.eberhardphoto.com/contact?sent=1" />
+              <input type="text" name="botcheck" class="hidden" tabindex="-1" autocomplete="off" />
+
+              <div class="grid sm:grid-cols-2 gap-4">
+                <label class="block">
+                  <span class="font-mono text-[11px] tracking-widest text-brand-black/80">FIRST NAME</span>
+                  <input type="text" name="first_name" required class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:border-brand-black focus:ring-2 focus:ring-brand-black/20" />
+                </label>
+                <label class="block">
+                  <span class="font-mono text-[11px] tracking-widest text-brand-black/80">LAST NAME</span>
+                  <input type="text" name="last_name" required class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand-black/20" />
+                </label>
+              </div>
+
+              <label class="block">
+                <span class="font-mono text-[11px] tracking-widest text-brand-black/80">PHONE *</span>
+                <input type="tel" name="phone" required class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand-black/20" />
+              </label>
+
+              <label class="block">
+                <span class="font-mono text-[11px] tracking-widest text-brand-black/80">EMAIL</span>
+                <input type="email" name="email" class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand-black/20" />
+              </label>
+
+              <div class="grid sm:grid-cols-[2fr_1fr] gap-4">
+                <label class="block">
+                  <span class="font-mono text-[11px] tracking-widest text-brand-black/80">CITY</span>
+                  <input type="text" name="city" class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand-black/20" />
+                </label>
+                <label class="block">
+                  <span class="font-mono text-[11px] tracking-widest text-brand-black/80">ZIP</span>
+                  <input type="text" name="zip" class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand-black/20" />
+                </label>
+              </div>
+
+              <label class="block">
+                <span class="font-mono text-[11px] tracking-widest text-brand-black/80">WHAT NEEDS TO GO?</span>
+                <textarea name="message" rows="4" class="mt-1 w-full bg-white border-2 border-brand-black px-3 py-2.5 font-mono text-sm focus:outline-none focus:ring-2 focus:ring-brand-black/20"></textarea>
+              </label>
+
+              <button type="submit" class="btn-skew bg-brand-black text-brand-yellow text-base w-full sm:w-auto">
+                <span>Send Quote Request</span>
+              </button>
+
+              <p class="font-mono text-[11px] text-brand-black/70 leading-relaxed">
+                Prefer to talk to a human? Call <a href="tel:+18015164149" class="underline font-bold">(801) 516-4149</a> for the fastest response.
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-10 items-center">
+          <div>
+            <h2 class="display text-4xl sm:text-5xl text-brand-black">
+              We Serve <span class="text-brand-yellow" style="-webkit-text-stroke:2px #0a0a0a;">Salt Lake & Utah County.</span>
+            </h2>
+            <p class="mt-5 text-ink/75 leading-relaxed">
+              Based in Bluffdale, our trucks roll out daily across the Wasatch Front. Bluffdale, Riverton, Herriman, South Jordan, West Jordan, Sandy, Draper, Lehi, Saratoga Springs, American Fork, Provo, Orem, Salt Lake City, and everywhere in between.
+            </p>
+          </div>
+          <div class="aspect-video bg-brand-black border-4 border-brand-yellow card-shadow relative overflow-hidden flex items-center justify-center">
+            <div class="text-center">
+              <svg viewBox="0 0 24 24" class="w-16 h-16 mx-auto text-brand-yellow/40" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
+              <div class="mt-3 font-mono text-[10px] text-brand-yellow/60 tracking-widest">[ optional: embed Google Maps here ]</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>

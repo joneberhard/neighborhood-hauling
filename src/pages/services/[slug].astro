@@ -1,0 +1,129 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceIcon from "../../components/ServiceIcon.astro";
+import HowItWorks from "../../components/HowItWorks.astro";
+import SecondaryCTA from "../../components/SecondaryCTA.astro";
+import { services } from "../../data/services";
+
+export function getStaticPaths() {
+  return services.map((s) => ({
+    params: { slug: s.slug },
+    props: { service: s },
+  }));
+}
+
+const { service } = Astro.props;
+
+const otherServices = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+---
+
+<Layout
+  title={`${service.title} in Utah | Neighborhood Hauling`}
+  description={service.short}
+>
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="SERVICES"
+      title={service.title}
+      description={service.short}
+      breadcrumb={[
+        { label: "Home", href: "/" },
+        { label: "Services", href: "/services" },
+        { label: service.title, href: `/services/${service.slug}` },
+      ]}
+    />
+
+    <section class="bg-white py-16 lg:py-24">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div class="grid lg:grid-cols-[1.5fr_1fr] gap-10 lg:gap-16 items-start">
+          <div>
+            <div class="size-20 bg-brand-black flex items-center justify-center mb-7 transform skew-x-[-12deg]">
+              <div class="transform skew-x-[12deg]">
+                <ServiceIcon icon={service.icon} className="w-10 h-10 text-brand-yellow" />
+              </div>
+            </div>
+            <p class="text-ink/85 text-lg leading-relaxed max-w-2xl" set:html={service.long}></p>
+
+            <div class="mt-10 grid sm:grid-cols-2 gap-6">
+              <div class="bg-brand-black border-2 border-brand-yellow text-white p-6">
+                <h3 class="display italic text-2xl text-brand-yellow mb-4">What We Take</h3>
+                <ul class="space-y-2.5">
+                  {service.weTake.map((item) => (
+                    <li class="font-mono text-sm flex items-start gap-2">
+                      <span class="text-brand-yellow shrink-0">+</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="bg-white border-2 border-brand-black p-6 card-shadow">
+                <h3 class="display italic text-2xl text-brand-black mb-4">What We Don't</h3>
+                <ul class="space-y-2.5">
+                  {service.weDont.map((item) => (
+                    <li class="font-mono text-sm text-ink/80 flex items-start gap-2">
+                      <span class="text-brand-black shrink-0">&minus;</span>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <aside class="lg:sticky lg:top-8 space-y-5">
+            <div class="bg-brand-yellow text-brand-black p-7 card-shadow">
+              <div class="font-mono text-[10px] tracking-widest">PRICING</div>
+              <p class="display italic text-2xl mt-2 leading-tight">{service.pricingNote}</p>
+            </div>
+
+            <a href="/contact" class="block bg-brand-black text-white p-7 hover:translate-y-[-3px] transition-transform border-2 border-brand-yellow">
+              <div class="font-mono text-[10px] tracking-widest text-brand-yellow">GET YOUR QUOTE</div>
+              <p class="display italic text-2xl mt-2 text-white">Send a Photo, Get a Price.</p>
+              <div class="mt-4 font-mono text-xs text-white/70">Most quotes back within minutes during business hours.</div>
+              <div class="mt-5 inline-flex items-center gap-2 font-mono text-sm text-brand-yellow">
+                START NOW <span>&gt;&gt;</span>
+              </div>
+            </a>
+
+            <a href="tel:+18015164149" class="block bg-white border-2 border-brand-black text-brand-black p-7 card-shadow hover:translate-y-[-3px] transition-transform">
+              <div class="font-mono text-[10px] tracking-widest">OR JUST CALL</div>
+              <p class="display italic text-2xl mt-2">(801) 516-4149</p>
+            </a>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <HowItWorks />
+
+    <section class="bg-brand-black py-16 lg:py-20">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div class="flex items-end justify-between mb-8 flex-wrap gap-4">
+          <h2 class="display text-3xl sm:text-4xl text-white">Other Services</h2>
+          <a href="/services" class="font-mono text-xs tracking-widest text-brand-yellow hover:underline">SEE ALL &gt;&gt;</a>
+        </div>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {otherServices.map((s) => (
+            <a href={`/services/${s.slug}`} class="group block bg-brand-black border-2 border-brand-yellow/50 hover:border-brand-yellow p-6 transition-colors">
+              <div class="size-12 bg-brand-yellow flex items-center justify-center mb-4 transform skew-x-[-12deg]">
+                <div class="transform skew-x-[12deg]">
+                  <ServiceIcon icon={s.icon} className="w-6 h-6 text-brand-black" />
+                </div>
+              </div>
+              <h3 class="display italic text-xl text-white mb-2 group-hover:text-brand-yellow transition-colors">{s.title}</h3>
+              <p class="font-mono text-xs text-white/60 leading-relaxed">{s.short}</p>
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <SecondaryCTA />
+  </main>
+  <Footer />
+</Layout>

@@ -1,0 +1,45 @@
+---
+const benefits = [
+  {
+    title: "Upfront Pricing",
+    body: "No hidden fees. You get a clear estimate before we start lifting anything.",
+    icon: "tag",
+  },
+  {
+    title: "Hard Work, Local Respect",
+    body: "Strong work ethic and good energy on every job. Fully insured and careful.",
+    icon: "fist",
+  },
+  {
+    title: "Eco-Friendly Disposal",
+    body: "We don't just dump. We sort, recycle, and donate to minimize landfill impact.",
+    icon: "leaf",
+  },
+];
+---
+
+<section class="bg-brand-black py-20 lg:py-24 border-t-4 border-brand-yellow">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <div class="grid md:grid-cols-3 gap-6">
+      {benefits.map((b) => (
+        <div class="bg-brand-black border-2 border-brand-yellow/50 p-7 hover:border-brand-yellow transition-colors group">
+          <div class="size-14 bg-brand-yellow flex items-center justify-center mb-5 transform skew-x-[-12deg]">
+            <div class="transform skew-x-[12deg]">
+              {b.icon === "tag" && (
+                <svg viewBox="0 0 24 24" class="w-7 h-7 text-brand-black" fill="currentColor"><path d="M21 12l-9 9-9-9V3h9z"/><circle cx="8" cy="8" r="2" fill="#ffd400"/></svg>
+              )}
+              {b.icon === "fist" && (
+                <svg viewBox="0 0 24 24" class="w-7 h-7 text-brand-black" fill="currentColor"><path d="M5 8a3 3 0 0 1 3-3h1v6H5zm5-4a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3V4zm5 1a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3V5z"/></svg>
+              )}
+              {b.icon === "leaf" && (
+                <svg viewBox="0 0 24 24" class="w-7 h-7 text-brand-black" fill="currentColor"><path d="M17 4c-7 0-13 5-13 12 0 2 1 4 1 4s2-3 6-4c4-1 7-5 7-9 0-1 0-2-1-3z"/></svg>
+              )}
+            </div>
+          </div>
+          <h3 class="display italic text-2xl text-white mb-3">{b.title}</h3>
+          <p class="text-white/70 text-sm leading-relaxed">{b.body}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

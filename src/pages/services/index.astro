@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import PageHero from "../../components/PageHero.astro";
+import ServiceGrid from "../../components/ServiceGrid.astro";
+import HowItWorks from "../../components/HowItWorks.astro";
+import SecondaryCTA from "../../components/SecondaryCTA.astro";
+---
+
+<Layout title="Junk Removal Services in Utah | Neighborhood Hauling" description="Full-service junk removal in Bluffdale and across the Wasatch Front. Garage cleanouts, construction debris, furniture, appliances, yard waste, and estate cleanouts.">
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="WHAT WE DO"
+      title="Anything That Doesn't"
+      highlight="Belong, Gone."
+      description="From a single appliance to a full estate cleanout, we handle the lifting, the loading, and the disposal. Pick a service below or just call &mdash; we'll figure out the rest."
+      breadcrumb={[{ label: "Home", href: "/" }, { label: "Services", href: "/services" }]}
+    />
+
+    <ServiceGrid />
+    <HowItWorks />
+    <SecondaryCTA />
+  </main>
+  <Footer />
+</Layout>

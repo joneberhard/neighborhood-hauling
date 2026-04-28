@@ -1,0 +1,39 @@
+---
+import { services } from "../data/services";
+import ServiceIcon from "./ServiceIcon.astro";
+---
+
+<section id="services" class="bg-white py-20 lg:py-28 relative overflow-hidden">
+  <div class="absolute -top-12 right-0 left-0 h-12">
+    <svg viewBox="0 0 1440 48" preserveAspectRatio="none" class="w-full h-full">
+      <polygon points="0,48 1440,0 1440,48" fill="#ffffff" />
+    </svg>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <div class="text-center mb-14">
+      <h2 class="display text-5xl sm:text-6xl text-brand-black">What We Take Away</h2>
+      <div class="mx-auto w-24 h-1.5 bg-brand-yellow my-5 transform skew-x-[-20deg]"></div>
+      <p class="max-w-2xl mx-auto text-ink/70 text-base">
+        No job is too big or too small. We handle all the loading, cleanup, and disposal so you don't have to lift a finger.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+      {services.map((s) => (
+        <a href={`/services/${s.slug}`} class="group block bg-white border-2 border-brand-black p-7 card-shadow hover:translate-y-[-4px] transition-transform">
+          <div class="size-14 bg-brand-black flex items-center justify-center mb-5 transform skew-x-[-12deg]">
+            <div class="transform skew-x-[12deg]">
+              <ServiceIcon icon={s.icon} />
+            </div>
+          </div>
+          <h3 class="display italic text-2xl text-brand-black mb-3">{s.title}</h3>
+          <p class="text-ink/70 text-sm leading-relaxed">{s.short}</p>
+          <div class="mt-5 font-mono text-xs text-brand-black tracking-widest flex items-center gap-2 group-hover:gap-3 transition-all">
+            LEARN MORE <span class="text-brand-yellow">&gt;&gt;</span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>

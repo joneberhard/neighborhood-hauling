@@ -1,0 +1,49 @@
+---
+const steps = [
+  {
+    n: "01",
+    title: "Get Your Price",
+    body: "Tell us what's going. Send photos or describe the load. We give you a clear, upfront quote within minutes.",
+  },
+  {
+    n: "02",
+    title: "Schedule a Pickup",
+    body: "Pick a day and a window that works for you. We text when we're on the way. No mystery, no missed slots.",
+  },
+  {
+    n: "03",
+    title: "We Haul It Away",
+    body: "Point to the junk and we lift. We sweep up after, then sort, recycle, and donate whatever we can.",
+  },
+];
+---
+
+<section class="bg-white py-20 lg:py-28">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <div class="text-center mb-14">
+      <div class="skew-tag bg-brand-black text-brand-yellow mb-5">
+        <span class="font-mono font-bold text-xs tracking-widest">HOW IT WORKS</span>
+      </div>
+      <h2 class="display text-5xl sm:text-6xl text-brand-black">
+        Three Steps. <span class="text-brand-yellow" style="-webkit-text-stroke:2px #0a0a0a;">Done.</span>
+      </h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6 lg:gap-8">
+      {steps.map((s, i) => (
+        <div class="relative bg-white border-2 border-brand-black p-8 card-shadow">
+          <div class="absolute -top-5 left-6 skew-tag bg-brand-yellow text-brand-black">
+            <span class="display italic text-xl">STEP {s.n}</span>
+          </div>
+          <h3 class="display italic text-3xl text-brand-black mt-4 mb-4">{s.title}</h3>
+          <p class="text-ink/80 text-sm leading-relaxed">{s.body}</p>
+          {i === 0 && (
+            <a href="#quote" class="btn-skew bg-brand-black text-brand-yellow text-sm mt-6">
+              <span>Book Now</span>
+            </a>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

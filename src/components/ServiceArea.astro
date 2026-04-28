@@ -1,0 +1,41 @@
+---
+const cities = [
+  "Bluffdale", "Riverton", "Herriman", "South Jordan", "West Jordan",
+  "Sandy", "Draper", "Lehi", "Saratoga Springs", "Eagle Mountain",
+  "Cedar Hills", "American Fork", "Pleasant Grove", "Highland", "Alpine",
+  "Provo", "Orem", "Salt Lake City", "Holladay", "Murray",
+  "Midvale", "Cottonwood Heights", "Sugar House", "Taylorsville", "Magna",
+];
+---
+
+<section class="bg-brand-black py-20 lg:py-28 relative">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <div class="grid lg:grid-cols-[1fr_2fr] gap-10 lg:gap-16 items-start">
+      <div>
+        <div class="skew-tag bg-brand-yellow text-brand-black mb-5">
+          <span class="font-mono font-bold text-xs tracking-widest">SERVICE AREA</span>
+        </div>
+        <h2 class="display text-4xl sm:text-5xl lg:text-6xl text-white">
+          Junk Removal Across <span class="text-brand-yellow">Salt Lake & Utah County.</span>
+        </h2>
+        <p class="mt-6 text-white/70 leading-relaxed">
+          Based in Bluffdale, we serve cities and towns across the Wasatch Front. Don't see yours? Give us a call &mdash; if we can drive there, we'll pick it up.
+        </p>
+        <a href="tel:+18015164149" class="btn-skew bg-brand-yellow text-brand-black text-base mt-8">
+          <span>(801) 516-4149</span>
+        </a>
+      </div>
+
+      <div>
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-2 border-l-4 border-brand-yellow pl-6">
+          {cities.map((c) => (
+            <a href="#quote" class="font-mono text-sm text-white/80 hover:text-brand-yellow py-1.5 transition-colors flex items-center gap-2 group">
+              <span class="text-brand-yellow text-xs">&gt;</span>
+              <span class="group-hover:translate-x-1 transition-transform">{c}, UT</span>
+            </a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

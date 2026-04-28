@@ -1,0 +1,122 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SecondaryCTA from "../components/SecondaryCTA.astro";
+
+const values = [
+  {
+    title: "Show Up, Every Time",
+    body: "On time, in full uniform, with the right gear. Cancellations and ghosting are not part of the deal.",
+  },
+  {
+    title: "One Flat, Honest Quote",
+    body: "We tell you the price before we touch anything. No 'while we're here' upsells, no surprise charges.",
+  },
+  {
+    title: "Treat Your Place Like Ours",
+    body: "Doorways padded. Floors protected. Site swept clean before we leave the driveway.",
+  },
+  {
+    title: "Recycle and Donate First",
+    body: "Furniture, appliances, and anything still useful gets sorted and routed to local charities and recyclers.",
+  },
+];
+---
+
+<Layout title="About Mou & Neighborhood Hauling | Bluffdale, UT" description="The story behind Neighborhood Hauling. Founded by Bluffdale barber Mou, built on hard work, local respect, and the simple goal of keepin' the hood clean.">
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="ABOUT THE COMPANY"
+      title="Built by a Local."
+      highlight="Run Like Family."
+      description="Neighborhood Hauling is owned and operated by Mou — a Bluffdale barber, neighbor, and the guy who'll back the truck up to your driveway. No call centers. No franchise overhead. Just a Utah crew that works hard and answers the phone."
+      breadcrumb={[{ label: "Home", href: "/" }, { label: "About", href: "/about" }]}
+    />
+
+    <section class="stripes py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div class="relative">
+            <div class="aspect-[3/4] bg-brand-black border-4 border-brand-black card-shadow flex items-center justify-center relative overflow-hidden">
+              <div class="absolute inset-0 bg-gradient-to-b from-brand-yellow/10 via-transparent to-brand-black"></div>
+              <div class="text-center relative">
+                <svg viewBox="0 0 24 24" class="w-20 h-20 mx-auto text-brand-yellow/40" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0z"/></svg>
+                <div class="mt-3 font-mono text-[10px] text-brand-yellow/60 tracking-widest">[ replace public/mou.jpg ]</div>
+              </div>
+            </div>
+            <div class="absolute -bottom-5 left-6 right-6 bg-brand-black border-2 border-brand-yellow px-5 py-3 text-center">
+              <span class="display italic text-white text-lg">Mou &mdash; Owner & Operator</span>
+            </div>
+          </div>
+
+          <div>
+            <h2 class="display text-4xl sm:text-5xl text-brand-black mb-6">
+              <span class="bg-brand-yellow px-3 py-1">Meet Mou.</span>
+            </h2>
+
+            <blockquote class="border-l-4 border-brand-yellow pl-5 mb-8">
+              <p class="font-mono text-ink text-base sm:text-lg leading-relaxed italic">
+                &ldquo;Whether I'm giving a clean fade at the barbershop or clearing out a chaotic garage, the goal is always the same: leaving things much better than I found them.&rdquo;
+              </p>
+            </blockquote>
+
+            <div class="space-y-5 text-ink/85 text-base leading-relaxed">
+              <p>
+                Mou has been cutting hair in Bluffdale for years &mdash; long enough that half his clients are also his neighbors. The barbershop is where everyone trades stories, vents about home projects, and asks the same question: <em>"Anyone know a guy who can haul this stuff out?"</em>
+              </p>
+              <p>
+                Eventually he stopped passing the question along and started showing up with a truck. What started as a favor for clients turned into Neighborhood Hauling &mdash; a real, insured, locally-owned junk removal company that still answers the phone like a neighbor.
+              </p>
+              <p>
+                He runs it the way he runs the barbershop: clean, respectful, and on time. The chair behind him at the shop and the truck behind him on the job both share one motto: <strong>Keepin' the hood clean.</strong>
+              </p>
+            </div>
+
+            <div class="mt-8 bg-brand-black p-6 flex items-center gap-4">
+              <div class="size-12 rounded-full bg-brand-yellow flex items-center justify-center shrink-0">
+                <svg viewBox="0 0 24 24" class="w-6 h-6 text-brand-black" fill="currentColor"><path d="M9 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm6 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM2 22l8-8 4 4-4 4zm20 0l-8-8-4 4 4 4z"/></svg>
+              </div>
+              <div>
+                <h4 class="display italic text-white text-xl">Need a Cut?</h4>
+                <p class="font-mono text-xs text-white/70 mt-1">Ask about Mou's barbershop hours while he's loading up the truck.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="bg-white py-20 lg:py-28">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+        <div class="text-center mb-14">
+          <div class="skew-tag bg-brand-black text-brand-yellow mb-5">
+            <span class="font-mono font-bold text-xs tracking-widest">WHAT WE STAND FOR</span>
+          </div>
+          <h2 class="display text-5xl sm:text-6xl text-brand-black">
+            More Than Just a <span class="text-brand-yellow" style="-webkit-text-stroke:2px #0a0a0a;">Pickup Truck.</span>
+          </h2>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6 lg:gap-8">
+          {values.map((v, i) => (
+            <div class="bg-white border-2 border-brand-black p-7 card-shadow flex gap-5">
+              <div class="display italic text-5xl text-brand-yellow shrink-0" style="-webkit-text-stroke:2px #0a0a0a;">
+                {String(i + 1).padStart(2, "0")}
+              </div>
+              <div>
+                <h3 class="display italic text-2xl text-brand-black mb-2">{v.title}</h3>
+                <p class="text-ink/75 text-sm leading-relaxed">{v.body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <SecondaryCTA />
+  </main>
+  <Footer />
+</Layout>

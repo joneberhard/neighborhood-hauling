@@ -1,0 +1,45 @@
+---
+interface Props {
+  eyebrow?: string;
+  title: string;
+  highlight?: string;
+  description?: string;
+  breadcrumb?: { label: string; href: string }[];
+}
+
+const { eyebrow, title, highlight, description, breadcrumb } = Astro.props;
+---
+
+<section class="relative bg-brand-black overflow-hidden border-b-4 border-brand-yellow">
+  <div class="absolute inset-0 opacity-[0.08]" style="background-image: repeating-linear-gradient(-45deg, #ffd400 0, #ffd400 2px, transparent 2px, transparent 32px);"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-16 sm:py-20 lg:py-24 relative">
+    {breadcrumb && (
+      <nav class="mb-5 font-mono text-xs text-white/60 flex items-center gap-2 flex-wrap">
+        {breadcrumb.map((b, i) => (
+          <>
+            <a href={b.href} class="hover:text-brand-yellow transition-colors uppercase tracking-widest">{b.label}</a>
+            {i < breadcrumb.length - 1 && <span class="text-brand-yellow">/</span>}
+          </>
+        ))}
+      </nav>
+    )}
+
+    {eyebrow && (
+      <div class="skew-tag bg-brand-yellow text-brand-black mb-5">
+        <span class="font-mono font-bold text-xs tracking-widest">{eyebrow}</span>
+      </div>
+    )}
+
+    <h1 class="display text-4xl sm:text-5xl lg:text-7xl text-white max-w-4xl">
+      {title}
+      {highlight && <> <span class="text-brand-yellow">{highlight}</span></>}
+    </h1>
+
+    {description && (
+      <p class="mt-6 max-w-2xl text-white/80 text-base sm:text-lg leading-relaxed border-l-4 border-brand-yellow pl-5">
+        {description}
+      </p>
+    )}
+  </div>
+</section>

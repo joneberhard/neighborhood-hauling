@@ -1,0 +1,68 @@
+---
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/services", label: "Services" },
+  { href: "/contact", label: "Contact" },
+];
+
+const path = Astro.url.pathname;
+---
+
+<header class="relative z-30 bg-brand-black border-b border-brand-yellow/40">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
+    <div class="flex items-center justify-between py-4 gap-4">
+      <a href="/" class="flex items-center gap-3 shrink-0">
+        <div
+          class="size-14 rounded-full bg-brand-yellow ring-2 ring-brand-yellow flex items-center justify-center"
+          aria-label="Neighborhood Hauling logo"
+        >
+          <svg viewBox="0 0 64 40" class="w-9 h-6 text-brand-black" fill="currentColor" aria-hidden="true">
+            <path d="M2 8h32v18H2z" />
+            <path d="M34 14h14l8 8v4H34z" />
+            <circle cx="14" cy="30" r="6" fill="#0a0a0a" />
+            <circle cx="14" cy="30" r="2.5" fill="#ffd400" />
+            <circle cx="46" cy="30" r="6" fill="#0a0a0a" />
+            <circle cx="46" cy="30" r="2.5" fill="#ffd400" />
+          </svg>
+        </div>
+        <span class="hidden sm:flex flex-col leading-tight">
+          <span class="display text-white text-base">Neighborhood</span>
+          <span class="font-mono text-[10px] tracking-[0.25em] text-brand-yellow">HAULING & JUNK REMOVAL</span>
+        </span>
+      </a>
+
+      <nav class="hidden lg:flex items-center gap-10">
+        {navLinks.map((link) => {
+          const active = link.href === "/" ? path === "/" : path.startsWith(link.href);
+          return (
+            <a
+              href={link.href}
+              class:list={[
+                "font-display italic uppercase hover:text-brand-yellow transition-colors text-lg tracking-wide",
+                active ? "text-brand-yellow" : "text-white",
+              ]}
+            >
+              {link.label}
+            </a>
+          );
+        })}
+      </nav>
+
+      <div class="flex items-center gap-4">
+        <a href="tel:+18015164149" class="hidden md:flex items-center gap-2 group">
+          <span class="size-9 rounded-full bg-brand-yellow flex items-center justify-center">
+            <svg viewBox="0 0 24 24" class="w-4 h-4 text-brand-black" fill="currentColor" aria-hidden="true">
+              <path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z" />
+            </svg>
+          </span>
+          <span class="font-mono text-white group-hover:text-brand-yellow transition-colors">(801) 516-4149</span>
+        </a>
+
+        <a href="/contact" class="btn-skew bg-brand-yellow text-brand-black text-sm sm:text-base font-bold">
+          <span>Get Free Quote</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
