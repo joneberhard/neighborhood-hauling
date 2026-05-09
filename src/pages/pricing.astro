@@ -1,0 +1,38 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import PricingTiers from "../components/PricingTiers.astro";
+import TrustStrip from "../components/TrustStrip.astro";
+import HowItWorks from "../components/HowItWorks.astro";
+import { breadcrumbListSchema } from "../lib/schemas";
+
+const schemas = [
+  breadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Pricing", url: "/pricing/" },
+  ]),
+];
+---
+
+<Layout
+  title="Junk Removal Pricing in Utah | Neighborhood Hauling"
+  description="Flat-rate junk removal pricing along the Wasatch Front. 1/4 trailer $130, half to three-quarter $230-$330, full trailer $430. Per-item minimums for mattresses, couches, and appliances."
+  schemas={schemas}
+>
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="PRICING GUIDE"
+      title="Flat Quotes."
+      highlight="No Surprises."
+      description="One 14-cubic-yard trailer, three tiers, plus per-item minimums for the small jobs. Send a photo, get a flat quote in minutes."
+      breadcrumb={[{ label: "Home", href: "/" }, { label: "Pricing", href: "/pricing" }]}
+    />
+    <TrustStrip />
+    <PricingTiers />
+    <HowItWorks />
+  </main>
+  <Footer />
+</Layout>

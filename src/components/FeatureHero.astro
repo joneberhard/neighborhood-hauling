@@ -1,24 +1,50 @@
 ---
-
+import { Image } from "astro:assets";
+import featureBefore from "../assets/jobs/job5-before.jpg";
+import featureAfter from "../assets/jobs/job5-after.jpg";
 ---
 
 <section class="bg-white py-20 lg:py-28">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
     <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
       <div class="relative">
-        <div class="aspect-[4/3] bg-brand-black border-4 border-brand-yellow card-shadow flex items-center justify-center overflow-hidden">
-          <div class="absolute inset-0 bg-gradient-to-br from-brand-yellow/20 via-transparent to-brand-black"></div>
-          <svg viewBox="0 0 200 130" class="w-2/3 text-brand-yellow relative" fill="currentColor" aria-hidden="true">
-            <path d="M10 30h100v55H10z" />
-            <path d="M110 50h40l25 22v13H110z" />
-            <circle cx="35" cy="95" r="14" fill="#0a0a0a" />
-            <circle cx="35" cy="95" r="7" fill="#ffd400" />
-            <circle cx="140" cy="95" r="14" fill="#0a0a0a" />
-            <circle cx="140" cy="95" r="7" fill="#ffd400" />
-          </svg>
-          <div class="absolute bottom-3 right-3 font-mono text-[10px] text-brand-yellow/70 tracking-widest">[ replace public/truck.jpg ]</div>
-        </div>
-        <div class="absolute -top-4 -left-4 skew-tag bg-brand-black text-brand-yellow">
+        <button
+          type="button"
+          class="ba-card group block w-full aspect-[4/3] bg-brand-black border-4 border-brand-yellow card-shadow overflow-hidden relative focus:outline-none focus:ring-4 focus:ring-brand-black"
+          data-ba
+          aria-label="Hero job: tap to toggle before and after"
+        >
+          <div class="ba-before absolute inset-0 transition-opacity duration-300">
+            <Image
+              src={featureBefore}
+              alt="Before the haul &mdash; the load Mou cleared out"
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              class="w-full h-full object-cover"
+              loading="eager"
+              fetchpriority="high"
+            />
+            <div class="absolute top-3 left-3 bg-brand-black text-brand-yellow font-marker text-3xl px-4 py-1 leading-none">Before</div>
+          </div>
+
+          <div class="ba-after absolute inset-0 opacity-0 transition-opacity duration-300">
+            <Image
+              src={featureAfter}
+              alt="After the haul &mdash; clean and clear"
+              widths={[640, 960, 1280]}
+              sizes="(min-width: 1024px) 50vw, 100vw"
+              class="w-full h-full object-cover"
+              loading="lazy"
+            />
+            <div class="absolute top-3 left-3 bg-brand-yellow text-brand-black font-marker text-3xl px-4 py-1 leading-none">After</div>
+          </div>
+
+          <div class="absolute bottom-3 right-3 bg-brand-yellow text-brand-black font-mono text-[11px] font-bold tracking-widest px-3 py-1.5 shadow-md flex items-center gap-1.5">
+            <svg viewBox="0 0 24 24" class="w-3 h-3" fill="currentColor" aria-hidden="true"><path d="M12 4V1L8 5l4 4V6c3.3 0 6 2.7 6 6 0 1-.2 1.9-.7 2.7l1.5 1.5C19.5 15 20 13.6 20 12c0-4.4-3.6-8-8-8zM6 12c0-1 .2-1.9.7-2.7L5.2 7.8C4.5 9 4 10.4 4 12c0 4.4 3.6 8 8 8v3l4-4-4-4v3c-3.3 0-6-2.7-6-6z"/></svg>
+            TAP TO FLIP
+          </div>
+        </button>
+        <div class="absolute -top-4 -left-4 skew-tag bg-brand-black text-brand-yellow pointer-events-none">
           <span class="font-mono font-bold text-xs tracking-widest">UTAH STRONG</span>
         </div>
       </div>
@@ -32,11 +58,11 @@
           Don't look anywhere else. You found the best in the business. Local, insured, and on time, every time. We show up ready to lift, sort, and sweep up after.
         </p>
         <div class="mt-10 flex flex-wrap gap-5">
-          <a href="#quote" class="btn-skew bg-brand-black text-brand-yellow text-base">
-            <span>Book A Pickup</span>
+          <a href="/contact" class="btn-skew bg-brand-black text-brand-yellow text-base">
+            <span>Send Photos &middot; Free Quote</span>
           </a>
-          <a href="tel:+18015164149" class="btn-skew bg-brand-yellow text-brand-black text-base">
-            <span>Call (801) 516-4149</span>
+          <a href="tel:+18015164149" class="btn-skew border-2 border-brand-black text-brand-black text-base">
+            <span>Or Call (801) 516-4149</span>
           </a>
         </div>
       </div>

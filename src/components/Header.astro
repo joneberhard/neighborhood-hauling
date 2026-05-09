@@ -7,33 +7,27 @@ const isActive = (href: string) =>
 
 const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
   { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
   { href: "/services", label: "Services", submenu: services },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/#faq", label: "FAQ" },
+  { href: "/about", label: "About" },
   { href: "/contact", label: "Contact" },
 ];
 ---
 
-<header class="relative z-30 bg-brand-black border-b border-brand-yellow/40">
+<header class="sticky top-0 z-30 bg-brand-black/95 backdrop-blur-md border-b border-brand-yellow/40 supports-[backdrop-filter]:bg-brand-black/85">
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-    <div class="flex items-center justify-between py-4 gap-4">
-      <a href="/" class="flex items-center gap-3 shrink-0">
-        <div
-          class="size-14 rounded-full bg-brand-yellow ring-2 ring-brand-yellow flex items-center justify-center"
-          aria-label="Neighborhood Hauling logo"
-        >
-          <svg viewBox="0 0 64 40" class="w-9 h-6 text-brand-black" fill="currentColor" aria-hidden="true">
-            <path d="M2 8h32v18H2z" />
-            <path d="M34 14h14l8 8v4H34z" />
-            <circle cx="14" cy="30" r="6" fill="#0a0a0a" />
-            <circle cx="14" cy="30" r="2.5" fill="#ffd400" />
-            <circle cx="46" cy="30" r="6" fill="#0a0a0a" />
-            <circle cx="46" cy="30" r="2.5" fill="#ffd400" />
-          </svg>
-        </div>
-        <span class="hidden sm:flex flex-col leading-tight">
-          <span class="display text-white text-base">Neighborhood</span>
-          <span class="font-mono text-[10px] tracking-[0.25em] text-brand-yellow">HAULING & JUNK REMOVAL</span>
-        </span>
+    <div class="flex items-center justify-between py-3 md:py-4 gap-4">
+      <a href="/" class="flex items-center shrink-0" aria-label="Neighborhood Hauling and Junk Removal">
+        <img
+          src="/logo-white.webp"
+          alt="Neighborhood Hauling and Junk Removal"
+          width="200"
+          height="76"
+          class="h-12 sm:h-14 w-auto"
+          loading="eager"
+          decoding="async"
+        />
       </a>
 
       <nav class="hidden lg:flex items-center gap-10">
@@ -131,20 +125,23 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
 
 <div
   id="mobile-menu"
-  class="hidden fixed inset-0 z-50 bg-brand-black overflow-y-auto lg:hidden"
+  class="hidden fixed inset-0 z-50 bg-brand-black overflow-y-auto overscroll-contain lg:hidden"
+  style="max-height: 100dvh; padding-bottom: env(safe-area-inset-bottom);"
   role="dialog"
   aria-modal="true"
   aria-label="Site menu"
 >
   <div class="px-4 sm:px-6 py-4 border-b border-brand-yellow/40 flex items-center justify-between">
-    <a href="/" class="flex items-center gap-3">
-      <div class="size-12 rounded-full bg-brand-yellow flex items-center justify-center">
-        <svg viewBox="0 0 64 40" class="w-8 h-5 text-brand-black" fill="currentColor"><path d="M2 8h32v18H2z"/><path d="M34 14h14l8 8v4H34z"/><circle cx="14" cy="30" r="6" fill="#0a0a0a"/><circle cx="14" cy="30" r="2.5" fill="#ffd400"/><circle cx="46" cy="30" r="6" fill="#0a0a0a"/><circle cx="46" cy="30" r="2.5" fill="#ffd400"/></svg>
-      </div>
-      <span class="flex flex-col leading-tight">
-        <span class="display text-white text-base">Neighborhood</span>
-        <span class="font-mono text-[9px] tracking-[0.25em] text-brand-yellow">HAULING & JUNK REMOVAL</span>
-      </span>
+    <a href="/" class="flex items-center" aria-label="Neighborhood Hauling and Junk Removal">
+      <img
+        src="/logo-white.webp"
+        alt="Neighborhood Hauling and Junk Removal"
+        width="180"
+        height="68"
+        class="h-12 w-auto"
+        loading="eager"
+        decoding="async"
+      />
     </a>
     <button
       id="mobile-menu-close"
@@ -166,14 +163,6 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
         path === "/" ? "text-brand-yellow" : "text-white",
       ]}
     >Home</a>
-
-    <a
-      href="/about"
-      class:list={[
-        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
-        isActive("/about") ? "text-brand-yellow" : "text-white",
-      ]}
-    >About</a>
 
     <div class="border-b border-white/10">
       <a
@@ -204,6 +193,27 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
         ))}
       </ul>
     </div>
+
+    <a
+      href="/pricing"
+      class:list={[
+        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
+        isActive("/pricing") ? "text-brand-yellow" : "text-white",
+      ]}
+    >Pricing</a>
+
+    <a
+      href="/#faq"
+      class="block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors text-white"
+    >FAQ</a>
+
+    <a
+      href="/about"
+      class:list={[
+        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
+        isActive("/about") ? "text-brand-yellow" : "text-white",
+      ]}
+    >About</a>
 
     <a
       href="/contact"

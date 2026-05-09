@@ -1,15 +1,28 @@
 ---
 import "../styles/global.css";
+import { localBusinessSchema, websiteSchema } from "../lib/schemas";
 
 interface Props {
   title?: string;
   description?: string;
+  noindex?: boolean;
+  schemas?: object[];
+  ogImage?: string;
 }
 
 const {
   title = "Neighborhood Hauling and Junk Removal | Bluffdale, UT",
   description = "Locally owned junk removal and hauling in Utah. Founded by barber Mou. Upfront pricing, hard work, and eco-friendly disposal. Keepin' the hood clean.",
+  noindex = false,
+  schemas = [],
+  ogImage = "/og-default.jpg",
 } = Astro.props;
+
+const SITE = "https://neighborhoodhaulingut.com";
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE).toString();
+const ogImageUrl = ogImage.startsWith("http") ? ogImage : SITE + ogImage;
+
+const allSchemas = [localBusinessSchema, websiteSchema, ...schemas];
 ---
 
 <html lang="en">
@@ -20,20 +33,63 @@ const {
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex,nofollow" />}
+    <link rel="canonical" href={canonical} />
+
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content="Neighborhood Hauling" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+
+    <meta name="theme-color" content="#0a0a0a" />
+    <meta name="format-detection" content="telephone=no" />
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600;700&family=Permanent+Marker&family=UnifrakturCook:wght@700&display=swap"
       rel="stylesheet"
     />
 
+    {allSchemas.map((s) => (
+      <script type="application/ld+json" set:html={JSON.stringify(s)} />
+    ))}
+
+    <slot name="head" />
+
     <title>{title}</title>
   </head>
-  <body class="bg-brand-black text-white font-mono">
+  <body class="bg-brand-black text-white font-mono pb-20 lg:pb-0">
     <slot />
+
+    <!-- Sticky mobile CTA band — form-first primary, call secondary. Hidden on desktop. -->
+    <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-[1fr_auto] gap-px bg-brand-black border-t-2 border-brand-yellow shadow-[0_-8px_24px_rgba(0,0,0,0.4)]">
+      <a
+        href="/contact"
+        class="bg-brand-yellow text-brand-black font-mono font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-2 py-4 hover:bg-brand-yellow/90 transition-colors"
+      >
+        <svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM8 9h8M8 13h5" stroke="#0a0a0a" stroke-width="2" fill="none"/></svg>
+        Send Photo &middot; Free Quote
+      </a>
+      <a
+        href="tel:+18015164149"
+        aria-label="Call Neighborhood Hauling"
+        class="bg-brand-black text-brand-yellow flex items-center justify-center px-6 py-4 hover:bg-brand-yellow/10 transition-colors"
+      >
+        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+      </a>
+    </div>
+
+    <!-- Cloudflare Web Analytics — privacy-first, no cookies, no GDPR banner -->
+    <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "e1754d89a26a4e7da6fcb5deb0b813c2"}' is:inline></script>
   </body>
 </html>

@@ -7,6 +7,8 @@
   --color-ink: #111111;
   --font-display: "Anton", "Impact", system-ui, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Courier New", monospace;
+  --font-marker: "Permanent Marker", "Marker Felt", "Comic Sans MS", cursive;
+  --font-tag: "UnifrakturCook", "UnifrakturMaguntia", "Times New Roman", serif;
 }
 
 @layer base {
@@ -73,5 +75,13 @@
   }
   .card-shadow {
     box-shadow: 10px 10px 0 0 #0a0a0a;
+  }
+  .font-marker {
+    font-family: var(--font-marker);
+    letter-spacing: 0.01em;
+  }
+  .font-tag {
+    font-family: var(--font-tag);
+    font-weight: 700;
   }
 }

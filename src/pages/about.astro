@@ -4,6 +4,16 @@ import Header from "../components/Header.astro";
 import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SecondaryCTA from "../components/SecondaryCTA.astro";
+import { breadcrumbListSchema } from "../lib/schemas";
+import { Image } from "astro:assets";
+import mouPortrait from "../assets/mou.jpg";
+
+const schemas = [
+  breadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "About", url: "/about/" },
+  ]),
+];
 
 const values = [
   {
@@ -25,7 +35,7 @@ const values = [
 ];
 ---
 
-<Layout title="About Mou & Neighborhood Hauling | Bluffdale, UT" description="The story behind Neighborhood Hauling. Founded by Bluffdale barber Mou, built on hard work, local respect, and the simple goal of keepin' the hood clean.">
+<Layout title="About Mou & Neighborhood Hauling | Bluffdale, UT" description="The story behind Neighborhood Hauling. Founded by Bluffdale barber Mou, built on hard work, local respect, and the simple goal of keepin' the hood clean." schemas={schemas}>
   <Header />
   <main>
     <PageHero
@@ -40,12 +50,15 @@ const values = [
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div class="relative">
-            <div class="aspect-[3/4] bg-brand-black border-4 border-brand-black card-shadow flex items-center justify-center relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-b from-brand-yellow/10 via-transparent to-brand-black"></div>
-              <div class="text-center relative">
-                <svg viewBox="0 0 24 24" class="w-20 h-20 mx-auto text-brand-yellow/40" fill="currentColor"><circle cx="12" cy="8" r="4"/><path d="M4 22a8 8 0 0 1 16 0z"/></svg>
-                <div class="mt-3 font-mono text-[10px] text-brand-yellow/60 tracking-widest">[ replace public/mou.jpg ]</div>
-              </div>
+            <div class="aspect-[3/4] bg-brand-black border-4 border-brand-black card-shadow overflow-hidden">
+              <Image
+                src={mouPortrait}
+                alt="Mou &mdash; founder of Neighborhood Hauling and Junk Removal"
+                widths={[480, 720, 1080]}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                class="w-full h-full object-cover"
+                loading="lazy"
+              />
             </div>
             <div class="absolute -bottom-5 left-6 right-6 bg-brand-black border-2 border-brand-yellow px-5 py-3 text-center">
               <span class="display italic text-white text-lg">Mou &mdash; Owner & Operator</span>
@@ -65,7 +78,7 @@ const values = [
 
             <div class="space-y-5 text-ink/85 text-base leading-relaxed">
               <p>
-                Mou has been cutting hair in Bluffdale for years &mdash; long enough that half his clients are also his neighbors. The barbershop is where everyone trades stories, vents about home projects, and asks the same question: <em>"Anyone know a guy who can haul this stuff out?"</em>
+                Mou has been cutting hair in Bluffdale for years &mdash; long enough that half his clients are also his neighbors. The <a href="https://neighborhoodbarbersutah.com" target="_blank" rel="noopener" class="underline decoration-brand-yellow decoration-2 underline-offset-2 hover:text-brand-black">barbershop</a> is where everyone trades stories, vents about home projects, and asks the same question: <em>"Anyone know a guy who can haul this stuff out?"</em>
               </p>
               <p>
                 Eventually he stopped passing the question along and started showing up with a truck. What started as a favor for clients turned into Neighborhood Hauling &mdash; a real, insured, locally-owned junk removal company that still answers the phone like a neighbor.
@@ -75,15 +88,20 @@ const values = [
               </p>
             </div>
 
-            <div class="mt-8 bg-brand-black p-6 flex items-center gap-4">
+            <a
+              href="https://neighborhoodbarbersutah.com"
+              target="_blank"
+              rel="noopener"
+              class="mt-8 bg-brand-black p-6 flex items-center gap-4 hover:bg-brand-black/85 transition-colors group"
+            >
               <div class="size-12 rounded-full bg-brand-yellow flex items-center justify-center shrink-0">
                 <svg viewBox="0 0 24 24" class="w-6 h-6 text-brand-black" fill="currentColor"><path d="M9 4a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm6 0a3 3 0 1 0 0 6 3 3 0 0 0 0-6zM2 22l8-8 4 4-4 4zm20 0l-8-8-4 4 4 4z"/></svg>
               </div>
               <div>
-                <h4 class="display italic text-white text-xl">Need a Cut?</h4>
-                <p class="font-mono text-xs text-white/70 mt-1">Ask about Mou's barbershop hours while he's loading up the truck.</p>
+                <h4 class="display italic text-white text-xl group-hover:text-brand-yellow transition-colors">Need a Cut? &gt;&gt;</h4>
+                <p class="font-mono text-xs text-white/70 mt-1">Visit Mou's barbershop &mdash; <span class="text-brand-yellow">neighborhoodbarbersutah.com</span></p>
               </div>
-            </div>
+            </a>
           </div>
         </div>
       </div>

@@ -7,6 +7,9 @@ import ServiceIcon from "../../components/ServiceIcon.astro";
 import HowItWorks from "../../components/HowItWorks.astro";
 import SecondaryCTA from "../../components/SecondaryCTA.astro";
 import { services } from "../../data/services";
+import { breadcrumbListSchema, serviceSchema, reviewsSchema } from "../../lib/schemas";
+import { reviews, aggregate } from "../../data/reviews";
+import Reviews from "../../components/Reviews.astro";
 
 export function getStaticPaths() {
   return services.map((s) => ({
@@ -18,11 +21,29 @@ export function getStaticPaths() {
 const { service } = Astro.props;
 
 const otherServices = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+
+const SITE = "https://neighborhoodhaulingut.com";
+const serviceId = `${SITE}/services/${service.slug}/#service`;
+
+const schemas: object[] = [
+  breadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services/" },
+    { name: service.title, url: `/services/${service.slug}/` },
+  ]),
+  serviceSchema(service),
+];
+// Attach reviews to THIS Service node (not the LocalBusiness) so Google
+// allows the rich-result eligibility. Helper returns null when reviews are
+// empty, so this is no-op until real review data is added.
+const reviewSchemaBlocks = reviewsSchema(reviews, aggregate, { "@id": serviceId });
+if (reviewSchemaBlocks) schemas.push(...reviewSchemaBlocks);
 ---
 
 <Layout
   title={`${service.title} in Utah | Neighborhood Hauling`}
   description={service.short}
+  schemas={schemas}
 >
   <Header />
   <main>
@@ -75,10 +96,13 @@ const otherServices = services.filter((s) => s.slug !== service.slug).slice(0, 3
             </div>
           </div>
 
-          <aside class="lg:sticky lg:top-8 space-y-5">
+          <aside class="lg:sticky lg:top-24 space-y-5">
             <div class="bg-brand-yellow text-brand-black p-7 card-shadow">
               <div class="font-mono text-[10px] tracking-widest">PRICING</div>
-              <p class="display italic text-2xl mt-2 leading-tight">{service.pricingNote}</p>
+              <p class="text-base sm:text-lg mt-3 leading-relaxed">{service.pricingNote}</p>
+              <a href="/pricing" class="mt-5 inline-flex items-center gap-2 font-mono text-xs tracking-widest font-bold border-b-2 border-brand-black hover:gap-3 transition-all">
+                SEE FULL PRICING <span>&gt;&gt;</span>
+              </a>
             </div>
 
             <a href="/contact" class="block bg-brand-black text-white p-7 hover:translate-y-[-3px] transition-transform border-2 border-brand-yellow">
@@ -100,6 +124,8 @@ const otherServices = services.filter((s) => s.slug !== service.slug).slice(0, 3
     </section>
 
     <HowItWorks />
+
+    <Reviews variant="service" />
 
     <section class="bg-brand-black py-16 lg:py-20">
       <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">

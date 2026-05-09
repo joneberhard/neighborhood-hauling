@@ -1,0 +1,160 @@
+---
+const minimums = [
+  { item: "Mattress / Box Spring", min: "$55" },
+  { item: "Couch / Sectional", min: "$65" },
+  { item: "Appliances", min: "$80" },
+  { item: "Construction Debris", min: "On-site quote" },
+];
+
+const tiers = [
+  {
+    fill: "1/4",
+    label: "Quarter Trailer",
+    price: "$130",
+    description: "A small load. Single-room cleanouts, garage corners, post-cleanup hauls.",
+    fillPct: 25,
+  },
+  {
+    fill: "1/2 - 3/4",
+    label: "Half to Three-Quarter",
+    price: "$230 - $330",
+    description: "Most jobs land here. Multi-room cleanouts, full garages, mid-size construction debris.",
+    fillPct: 65,
+    highlight: true,
+  },
+  {
+    fill: "Full",
+    label: "Full Trailer",
+    price: "$430",
+    description: "The whole 14-yard trailer, packed. Estate cleanouts, full property clears, big remodel debris.",
+    fillPct: 100,
+  },
+];
+---
+
+<section id="pricing" class="bg-brand-black py-20 lg:py-28 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06]" style="background-image: repeating-linear-gradient(-45deg, #ffd400 0, #ffd400 2px, transparent 2px, transparent 32px);"></div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 relative">
+    <div class="text-center max-w-3xl mx-auto">
+      <div class="skew-tag bg-brand-yellow text-brand-black mb-5 inline-flex">
+        <span class="font-mono font-bold text-xs tracking-widest">PRICING GUIDE</span>
+      </div>
+      <h2 class="display text-5xl sm:text-6xl lg:text-7xl text-white">
+        Flat Quotes. <span class="text-brand-yellow">No Surprises.</span>
+      </h2>
+      <p class="mt-6 text-white/80 text-base sm:text-lg leading-relaxed">
+        Whether it's one item or a full property, send a photo and we'll quote you flat. No on-site sales pitch. No estimates that move.
+      </p>
+    </div>
+
+    <div class="mt-14 bg-brand-black border-2 border-brand-yellow p-7 lg:p-9 card-shadow relative">
+      <div class="absolute -top-4 left-6 skew-tag bg-brand-yellow text-brand-black inline-flex">
+        <span class="font-mono font-bold text-[10px] tracking-widest">SINGLE-ITEM JOBS</span>
+      </div>
+      <div class="flex items-end justify-between flex-wrap gap-4 mb-6 mt-3">
+        <h3 class="display text-3xl sm:text-4xl text-white">
+          Just One or Two <span class="text-brand-yellow">Items?</span>
+        </h3>
+        <p class="font-mono text-xs text-white/70 max-w-md">
+          The prices below are <span class="text-brand-yellow font-bold">minimums for the specific items listed</span> &mdash; final price depends on size, access, and disposal fees. Bigger loads price by trailer fill below.
+        </p>
+      </div>
+
+      <ul class="grid sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {minimums.map((m) => {
+          const isPrice = m.min.startsWith("$");
+          return (
+            <li class="bg-brand-black border-2 border-white/15 p-5 flex flex-col hover:border-brand-yellow/60 transition-colors">
+              <div class="font-mono text-[10px] tracking-widest text-brand-yellow">{m.item.toUpperCase()}</div>
+              {isPrice ? (
+                <div class="flex items-baseline gap-1.5 mt-2">
+                  <span class="font-mono text-[10px] tracking-widest text-white/50">MIN</span>
+                  <span class="font-marker text-3xl text-white leading-none">{m.min}</span>
+                </div>
+              ) : (
+                <div class="font-marker text-xl text-brand-yellow leading-tight mt-2">{m.min}</div>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+
+      <p class="mt-5 font-mono text-[11px] text-white/55 italic leading-relaxed">
+        Item not on this list? Send a photo through the form &mdash; we'll quote it.
+      </p>
+    </div>
+
+    <div class="mt-14 text-center max-w-3xl mx-auto">
+      <div class="skew-tag bg-brand-black text-brand-yellow border-2 border-brand-yellow mb-5 inline-flex">
+        <span class="font-mono font-bold text-[10px] tracking-widest">BIGGER LOADS</span>
+      </div>
+      <h3 class="display text-3xl sm:text-4xl lg:text-5xl text-white">
+        Multi-item or Full <span class="text-brand-yellow">Cleanouts?</span>
+      </h3>
+      <p class="mt-4 text-white/80 text-base leading-relaxed">
+        For multiple items or full property clears, we price by trailer fill. One 14&#8209;cubic&#8209;yard trailer, three tiers.
+      </p>
+    </div>
+
+    <div class="mt-10 grid md:grid-cols-3 gap-6 lg:gap-8">
+      {tiers.map((t) => (
+        <div class:list={[
+          "relative p-7 lg:p-8 border-2 transition-transform hover:translate-y-[-4px]",
+          t.highlight ? "bg-brand-yellow text-brand-black border-brand-yellow card-shadow" : "bg-brand-black text-white border-brand-yellow/40",
+        ]}>
+          {t.highlight && (
+            <div class="absolute -top-4 right-6 skew-tag bg-brand-black text-brand-yellow border-2 border-brand-yellow">
+              <span class="font-mono font-bold text-[10px] tracking-widest">MOST JOBS</span>
+            </div>
+          )}
+
+          <div class:list={[
+            "h-24 mb-6 flex items-end gap-1.5",
+          ]}>
+            <div class:list={[
+              "flex-1 border-2 relative overflow-hidden",
+              t.highlight ? "border-brand-black" : "border-brand-yellow",
+            ]} style={`height: 90%;`}>
+              <div
+                class:list={[
+                  "absolute bottom-0 left-0 right-0",
+                  t.highlight ? "bg-brand-black/85" : "bg-brand-yellow/80",
+                ]}
+                style={`height: ${t.fillPct}%;`}
+              ></div>
+            </div>
+            <div class:list={[
+              "size-7 rounded-full border-2 self-end",
+              t.highlight ? "border-brand-black bg-brand-black" : "border-brand-yellow bg-brand-yellow/80",
+            ]}></div>
+            <div class:list={[
+              "size-7 rounded-full border-2 self-end -ml-1",
+              t.highlight ? "border-brand-black bg-brand-black" : "border-brand-yellow bg-brand-yellow/80",
+            ]}></div>
+          </div>
+
+          <div class="font-marker text-5xl lg:text-6xl leading-none">{t.fill}</div>
+          <div class="font-mono text-[11px] tracking-widest mt-3 opacity-70">{t.label.toUpperCase()}</div>
+
+          <div class:list={[
+            "font-marker text-4xl lg:text-5xl leading-none mt-5",
+            t.highlight ? "text-brand-black" : "text-brand-yellow",
+          ]}>{t.price}</div>
+
+          <p class:list={[
+            "mt-4 text-sm leading-relaxed",
+            t.highlight ? "text-brand-black/80" : "text-white/75",
+          ]}>{t.description}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="mt-14 text-center">
+      <a href="/contact" class="btn-skew bg-brand-yellow text-brand-black text-base">
+        <span>Send Photos &middot; Get Your Flat Quote</span>
+      </a>
+      <p class="mt-4 font-mono text-xs text-white/50 tracking-widest">14 CUBIC YARD TRAILER &middot; SALT LAKE / UTAH / WASATCH COUNTY</p>
+    </div>
+  </div>
+</section>

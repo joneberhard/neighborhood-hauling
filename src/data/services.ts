@@ -39,7 +39,7 @@ export const services: Service[] = [
       "Live ammunition or fuel",
     ],
     pricingNote:
-      "Priced by truck volume. Send a photo for a same-day flat quote.",
+      "Priced by trailer fill: 1/4 trailer $130, half to three-quarter $230-$330, full $430. Send a photo for a same-day flat quote.",
   },
   {
     slug: "garage-storage",
@@ -61,7 +61,7 @@ export const services: Service[] = [
       "Hazardous chemicals",
     ],
     pricingNote:
-      "Most garages clear in a half day. Flat quote based on volume, not hours.",
+      "Most garages fill 1/2 to a full trailer ($230-$430). Flat quote based on volume, not hours.",
   },
   {
     slug: "construction-debris",
@@ -69,7 +69,7 @@ export const services: Service[] = [
     short:
       "Remodeling aftermath? We haul drywall, wood, tile, fencing, and other post-construction materials.",
     long:
-      "Renovation done? Tear-out finished? We haul out the mess so you don't burn a Saturday at the dump. Drywall, wood, flooring, fencing, fixtures &mdash; all loaded and disposed of properly.",
+      "Renovation done? Tear-out finished? We haul out the mess so you don't burn a Saturday at the dump. Drywall, wood, flooring, fencing, fixtures — all loaded and disposed of properly.",
     icon: "hammer",
     weTake: [
       "Drywall, wood, and trim",
@@ -84,7 +84,7 @@ export const services: Service[] = [
       "Wet concrete or stucco mud",
     ],
     pricingNote:
-      "Priced by load. We coordinate with contractors and homeowners.",
+      "On-site quote for construction debris — weight and disposal fees vary by material. We coordinate with contractors and homeowners.",
   },
   {
     slug: "furniture-appliances",
@@ -92,7 +92,7 @@ export const services: Service[] = [
     short:
       "Heavy couches, mattresses, refrigerators, and washers removed safely without damaging your property.",
     long:
-      "Sectional couches, king mattresses, fridges that don't fit through the door &mdash; we know the moves. We pad doorways, work the angles, and get heavy items out without scraping your walls or your floors.",
+      "Sectional couches, king mattresses, fridges that don't fit through the door — we know the moves. We pad doorways, work the angles, and get heavy items out without scraping your walls or your floors.",
     icon: "couch",
     weTake: [
       "Couches and sectionals",
@@ -105,7 +105,7 @@ export const services: Service[] = [
       "Live appliances with refrigerant leaks",
     ],
     pricingNote:
-      "Priced per item or per truck load. Stairs and tight access included.",
+      "Per-item minimums: mattress/box spring $55, couch/sectional $65, appliances $80. Multi-item jobs priced by trailer fill. Stairs and tight access included.",
   },
   {
     slug: "yard-waste",
@@ -113,7 +113,7 @@ export const services: Service[] = [
     short:
       "Branches, leaves, sod, and landscaping debris loaded up and hauled out so your yard stays sharp.",
     long:
-      "After a big trim, a sod tear-out, or a storm, the pile in the side yard adds up fast. We load it, haul it, and dispose of it at the green-waste facility &mdash; no green-can wait, no trips back and forth.",
+      "After a big trim, a sod tear-out, or a storm, the pile in the side yard adds up fast. We load it, haul it, and dispose of it at the green-waste facility — no green-can wait, no trips back and forth.",
     icon: "leaf",
     weTake: [
       "Tree branches and trimmings",
@@ -125,7 +125,7 @@ export const services: Service[] = [
     weDont: [
       "Live trees we have to fell (call an arborist first)",
     ],
-    pricingNote: "Priced by load. Same-day pickups when our schedule allows.",
+    pricingNote: "Priced by trailer fill: 1/4 trailer $130, half to three-quarter $230-$330, full $430. Same-day pickups when our schedule allows.",
   },
   {
     slug: "estate-cleanouts",
@@ -146,6 +146,6 @@ export const services: Service[] = [
       "Items being inventoried for legal or insurance purposes (until released)",
     ],
     pricingNote:
-      "Custom quote per property. Flat rate, no hourly surprises.",
+      "Custom quote per property — usually multiple full trailers. Flat rate, no hourly surprises.",
   },
 ];

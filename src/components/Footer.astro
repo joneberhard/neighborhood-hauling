@@ -6,17 +6,22 @@ const year = new Date().getFullYear();
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10 py-14">
     <div class="grid md:grid-cols-3 gap-10">
       <div>
-        <div class="flex items-center gap-3">
-          <div class="size-12 rounded-full bg-brand-yellow flex items-center justify-center">
-            <svg viewBox="0 0 64 40" class="w-8 h-5 text-brand-black" fill="currentColor"><path d="M2 8h32v18H2z"/><path d="M34 14h14l8 8v4H34z"/><circle cx="14" cy="30" r="6" fill="#0a0a0a"/><circle cx="14" cy="30" r="2.5" fill="#ffd400"/><circle cx="46" cy="30" r="6" fill="#0a0a0a"/><circle cx="46" cy="30" r="2.5" fill="#ffd400"/></svg>
-          </div>
-          <div class="leading-tight">
-            <div class="display italic text-white text-lg">Neighborhood</div>
-            <div class="font-mono text-[10px] tracking-[0.25em] text-brand-yellow">HAULING & JUNK REMOVAL</div>
-          </div>
-        </div>
+        <a href="/" class="block max-w-[260px]" aria-label="Neighborhood Hauling and Junk Removal">
+          <img
+            src="/logo-white.webp"
+            alt="Neighborhood Hauling and Junk Removal"
+            width="260"
+            height="98"
+            class="w-full h-auto"
+            loading="lazy"
+            decoding="async"
+          />
+        </a>
+        <p class="mt-3 font-tag text-2xl text-brand-yellow leading-none">
+          &ldquo; keepin&rsquo; the hood clean &rdquo;
+        </p>
         <p class="mt-5 text-white/70 text-sm leading-relaxed max-w-xs">
-          Locally owned junk removal in Bluffdale, Utah. Founded by barber Mou. Keepin' the hood clean since day one.
+          Locally owned junk removal along the Wasatch Front. Founded by Bluffdale barber Mou. Fully licensed and insured.
         </p>
       </div>
 
@@ -37,7 +42,7 @@ const year = new Date().getFullYear();
           </li>
           <li class="flex items-start gap-2 text-white/80">
             <svg viewBox="0 0 24 24" class="w-4 h-4 text-brand-yellow shrink-0 mt-0.5" fill="currentColor"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7zm0 9a2 2 0 1 1 0-4 2 2 0 0 1 0 4z"/></svg>
-            564 Lewski Ln,<br />Bluffdale, UT 84065
+            Based out of Riverton, Utah
           </li>
         </ul>
       </div>
@@ -46,16 +51,19 @@ const year = new Date().getFullYear();
         <h4 class="display italic text-brand-yellow text-xl mb-4">Quick Links</h4>
         <ul class="space-y-2 text-sm">
           <li><a href="/services" class="text-white/80 hover:text-brand-yellow transition-colors">Services</a></li>
+          <li><a href="/pricing" class="text-white/80 hover:text-brand-yellow transition-colors">Pricing</a></li>
+          <li><a href="/#faq" class="text-white/80 hover:text-brand-yellow transition-colors">FAQ</a></li>
           <li><a href="/about" class="text-white/80 hover:text-brand-yellow transition-colors">About Mou</a></li>
           <li><a href="/contact" class="text-white/80 hover:text-brand-yellow transition-colors">Get a Quote</a></li>
-          <li><a href="/contact" class="text-white/80 hover:text-brand-yellow transition-colors">Contact</a></li>
+          <li><a href="/privacy" class="text-white/80 hover:text-brand-yellow transition-colors">Privacy Policy</a></li>
+          <li><a href="/terms" class="text-white/80 hover:text-brand-yellow transition-colors">Terms of Service</a></li>
         </ul>
       </div>
     </div>
 
     <div class="mt-12 pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-3">
       <p class="font-mono text-xs text-white/50">&copy; {year} Neighborhood Hauling and Junk Removal. All rights reserved.</p>
-      <p class="font-mono text-xs text-brand-yellow tracking-widest">KEEPIN' THE HOOD CLEAN.</p>
+      <p class="font-mono text-xs text-white/50 tracking-widest">FULLY LICENSED &amp; INSURED &middot; SALT LAKE / UTAH / WASATCH COUNTY</p>
     </div>
   </div>
 </footer>

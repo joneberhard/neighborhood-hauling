@@ -1,0 +1,102 @@
+---
+import { reviews, aggregate } from "../data/reviews";
+
+interface Props {
+  /** Heading variant — "home" is the dominant version, "service" is more compact */
+  variant?: "home" | "service";
+}
+
+const { variant = "home" } = Astro.props;
+
+const isHome = variant === "home";
+const hasRealReviews = reviews.length > 0;
+
+// Mou's actual Google Business Profile (resolved from the Maps short URL he shared).
+// Tapping this link opens the GBP in Google Maps, where users can hit "Write a review."
+// If Mou ever claims a g.page/r/<id>/review URL in his GBP dashboard, swap to that for
+// a one-tap review form instead of two-tap.
+const googleReviewUrl = "https://maps.app.goo.gl/oN3CrLU3eVEZMi6V9";
+---
+
+<section
+  id="reviews"
+  class:list={[
+    "relative",
+    isHome ? "bg-brand-yellow py-20 lg:py-28 border-y-4 border-brand-black" : "bg-brand-yellow/95 py-14 border-y-4 border-brand-black",
+  ]}
+>
+  <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(-45deg, #0a0a0a 0, #0a0a0a 2px, transparent 2px, transparent 28px);"></div>
+
+  <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10 relative">
+    <div class="text-center max-w-3xl mx-auto mb-10">
+      <div class="skew-tag bg-brand-black text-brand-yellow border-2 border-brand-yellow mb-5 inline-flex">
+        <span class="font-mono font-bold text-xs tracking-widest">REAL JOBS &middot; REAL WORDS</span>
+      </div>
+      <h2 class:list={[
+        "display text-brand-black",
+        isHome ? "text-5xl sm:text-6xl lg:text-7xl" : "text-4xl sm:text-5xl",
+      ]}>
+        What Neighbors <span class="text-white" style="-webkit-text-stroke:2px #0a0a0a;">Are Saying.</span>
+      </h2>
+    </div>
+
+    {hasRealReviews && aggregate && (
+      <div class="text-center mb-10">
+        <div class="inline-flex items-center gap-3 bg-brand-black text-brand-yellow px-6 py-3 border-2 border-brand-black">
+          <div class="flex" aria-hidden="true">
+            {[1, 2, 3, 4, 5].map((n) => (
+              <svg viewBox="0 0 24 24" class:list={[
+                "w-5 h-5",
+                n <= Math.round(aggregate.ratingValue) ? "text-brand-yellow" : "text-brand-yellow/30",
+              ]} fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+            ))}
+          </div>
+          <span class="font-marker text-2xl">{aggregate.ratingValue.toFixed(1)}</span>
+          <span class="font-mono text-xs tracking-widest opacity-80">/ 5.0 &middot; {aggregate.reviewCount} REVIEWS</span>
+        </div>
+      </div>
+    )}
+
+    {hasRealReviews ? (
+      <div class:list={[
+        "grid gap-5",
+        isHome ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2",
+      ]}>
+        {reviews.slice(0, isHome ? 6 : 2).map((r) => (
+          <article class="bg-white border-2 border-brand-black p-6 card-shadow">
+            <div class="flex items-center gap-1 mb-3" aria-label={`${r.rating} out of 5 stars`}>
+              {[1, 2, 3, 4, 5].map((n) => (
+                <svg viewBox="0 0 24 24" class:list={[
+                  "w-4 h-4",
+                  n <= r.rating ? "text-brand-yellow" : "text-brand-black/15",
+                ]} fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+              ))}
+            </div>
+            <blockquote class="text-ink text-sm leading-relaxed">
+              &ldquo;{r.text}&rdquo;
+            </blockquote>
+            <footer class="mt-4 flex items-center justify-between">
+              <span class="font-mono text-[11px] font-bold tracking-widest text-brand-black">{r.author.toUpperCase()}</span>
+              <time class="font-mono text-[10px] text-brand-black/50">{r.date}</time>
+            </footer>
+          </article>
+        ))}
+      </div>
+    ) : (
+      <div class="bg-white border-4 border-brand-black p-8 sm:p-10 card-shadow text-center max-w-2xl mx-auto">
+        <div class="flex items-center justify-center gap-1 mb-4" aria-hidden="true">
+          {[1, 2, 3, 4, 5].map(() => (
+            <svg viewBox="0 0 24 24" class="w-7 h-7 text-brand-black/15" fill="currentColor"><path d="M12 2l3 7h7l-5.5 4.5L18 21l-6-4-6 4 1.5-7.5L2 9h7z"/></svg>
+          ))}
+        </div>
+        <h3 class="display italic text-3xl text-brand-black">Reviews Are <span class="bg-brand-yellow px-2">Coming Soon.</span></h3>
+        <p class="mt-4 font-mono text-sm text-ink/75 leading-relaxed">
+          We've cleared a lot of garages, but we just started asking folks to leave us a word about it. If we've worked together, you'd help us out a lot by sharing your experience.
+        </p>
+        <a href={googleReviewUrl} target="_blank" rel="noopener" class="mt-6 inline-flex btn-skew bg-brand-black text-brand-yellow text-base">
+          <span>Leave Mou a Review</span>
+        </a>
+      </div>
+    )}
+  </div>
+</section>

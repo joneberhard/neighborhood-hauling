@@ -6,9 +6,19 @@ import PageHero from "../../components/PageHero.astro";
 import ServiceGrid from "../../components/ServiceGrid.astro";
 import HowItWorks from "../../components/HowItWorks.astro";
 import SecondaryCTA from "../../components/SecondaryCTA.astro";
+import { breadcrumbListSchema, servicesItemListSchema } from "../../lib/schemas";
+import { services } from "../../data/services";
+
+const schemas = [
+  breadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Services", url: "/services/" },
+  ]),
+  servicesItemListSchema(services),
+];
 ---
 
-<Layout title="Junk Removal Services in Utah | Neighborhood Hauling" description="Full-service junk removal in Bluffdale and across the Wasatch Front. Garage cleanouts, construction debris, furniture, appliances, yard waste, and estate cleanouts.">
+<Layout title="Junk Removal Services in Utah | Neighborhood Hauling" description="Full-service junk removal in Bluffdale and across the Wasatch Front. Garage cleanouts, construction debris, furniture, appliances, yard waste, and estate cleanouts." schemas={schemas}>
   <Header />
   <main>
     <PageHero

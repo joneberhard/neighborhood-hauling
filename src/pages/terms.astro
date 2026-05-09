@@ -1,0 +1,130 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import { breadcrumbListSchema } from "../lib/schemas";
+
+const schemas = [
+  breadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Terms of Service", url: "/terms/" },
+  ]),
+];
+---
+
+<Layout
+  title="Terms of Service | Neighborhood Hauling"
+  description="Terms and conditions for using the Neighborhood Hauling and Junk Removal website and services, including SMS communication terms."
+  schemas={schemas}
+>
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="LEGAL"
+      title="Terms of"
+      highlight="Service."
+      description="The rules and conditions for using our website and services."
+      breadcrumb={[{ label: "Home", href: "/" }, { label: "Terms of Service", href: "/terms" }]}
+    />
+
+    <section class="bg-white py-16 lg:py-24">
+      <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 prose-policy text-ink">
+        <p class="font-mono text-xs tracking-widest text-ink/60">LAST UPDATED: MAY 1, 2026</p>
+
+        <p class="mt-6 leading-relaxed">
+          Welcome to Neighborhood Hauling and Junk Removal. These Terms and Conditions outline the rules and regulations for the use of our website and the provision of our services. By accessing this website or booking our services, we assume you accept these terms in full.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">1. Services Provided</h2>
+        <p class="mt-3 leading-relaxed">
+          Neighborhood Hauling and Junk Removal provides professional hauling, debris removal, and junk disposal services. We reserve the right to refuse service for any items deemed hazardous, toxic, or illegal in accordance with local and federal regulations.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">2. Estimates and Pricing</h2>
+        <ul class="mt-2 space-y-1.5 list-disc pl-6 leading-relaxed">
+          <li><strong>Quotes:</strong> All online or over-the-phone estimates are preliminary. Final pricing is determined on-site based on the actual volume, weight, and nature of the items to be removed.</li>
+          <li><strong>Surcharges:</strong> Certain items (e.g., tires, mattresses, appliances with Freon) may incur additional disposal fees mandated by local facilities.</li>
+          <li><strong>Payment:</strong> Payment is due upon completion of the service unless otherwise agreed upon in writing.</li>
+        </ul>
+
+        <h2 class="display text-3xl text-brand-black mt-10">3. Scheduling and Cancellations</h2>
+        <ul class="mt-2 space-y-1.5 list-disc pl-6 leading-relaxed">
+          <li><strong>Arrival Windows:</strong> We provide estimated arrival windows. While we strive to be punctual, delays due to traffic or previous jobs may occur. We will communicate any significant delays.</li>
+          <li><strong>Cancellations:</strong> Please provide at least 24 hours' notice for cancellations or rescheduling. Cancellations made with less than 24 hours' notice may be subject to a service fee.</li>
+        </ul>
+
+        <h2 class="display text-3xl text-brand-black mt-10">4. Customer Responsibilities</h2>
+        <ul class="mt-2 space-y-1.5 list-disc pl-6 leading-relaxed">
+          <li><strong>Access:</strong> Customers must ensure clear and safe access to the items being removed.</li>
+          <li><strong>Ownership:</strong> You represent and warrant that you are the legal owner of all items being hauled or have express permission from the owner to dispose of them.</li>
+          <li><strong>Hazardous Materials:</strong> You must disclose if any items contain hazardous materials (e.g., chemicals, lead paint, asbestos). We cannot haul materials that pose a safety risk to our crew or the environment.</li>
+        </ul>
+
+        <h2 class="display text-3xl text-brand-black mt-10">5. Age Restriction (18+)</h2>
+        <p class="mt-3 leading-relaxed">
+          Users must be 18 years of age or older to use our services. By opting in, users confirm that they meet the minimum age requirement.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">6. Liability and Property Damage</h2>
+        <p class="mt-3 leading-relaxed">
+          We exercise extreme care during the removal process. However, we are not liable for damage to driveways, lawns, or structures if such damage is a result of the weight of our vehicles or the inherent difficulty of moving heavy or bulky items as requested by the customer. Any claims for damage must be reported to our team lead on-site before the crew departs.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">7. Disposal and Donation</h2>
+        <p class="mt-3 leading-relaxed">
+          Items collected are disposed of at local landfills, recycling centers, or donated to local charities at our discretion. Once items are loaded onto our vehicles, ownership transfers to Neighborhood Hauling and Junk Removal, and items cannot be recovered.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">8. Intellectual Property</h2>
+        <p class="mt-3 leading-relaxed">
+          Unless otherwise stated, Neighborhood Hauling and Junk Removal owns the intellectual property rights for all material on this website. All intellectual property rights are reserved.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">9. Limitation of Liability</h2>
+        <p class="mt-3 leading-relaxed">
+          In no event shall Neighborhood Hauling and Junk Removal, nor any of its officers, directors, and employees, be held liable for anything arising out of or in any way connected with your use of this website or our services, whether such liability is under contract or tort.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">10. Governing Law</h2>
+        <p class="mt-3 leading-relaxed">
+          These terms are governed by and construed in accordance with the laws of the State of Utah, and you irrevocably submit to the exclusive jurisdiction of the courts in that location.
+        </p>
+
+        <div class="mt-12 bg-brand-yellow border-4 border-brand-black p-6 sm:p-8">
+          <h2 class="display text-3xl text-brand-black">11. SMS Communications</h2>
+          <p class="mt-3 leading-relaxed text-brand-black">
+            By providing your phone number and opting in through our website forms, you consent to receive SMS messages from Neighborhood Hauling and Junk Removal related to your service requests, including appointment confirmations, arrival notifications, job updates, estimates, and scheduling reminders. If you separately opt in to marketing messages, you may also receive promotions, discounts, seasonal clean-up offers, and service updates.
+          </p>
+          <p class="mt-3 leading-relaxed text-brand-black">
+            Message frequency varies. Message and data rates may apply. You can reply <strong>STOP</strong> to unsubscribe or <strong>HELP</strong> for assistance at any time. Carriers are not liable for delayed or undelivered messages.
+          </p>
+          <p class="mt-3 leading-relaxed text-brand-black">
+            Consent to receive SMS messages is not a condition of purchase.
+          </p>
+        </div>
+
+        <h2 class="display text-3xl text-brand-black mt-12">12. Privacy</h2>
+        <p class="mt-3 leading-relaxed">
+          Your privacy is important to us. Any personal information collected through this SMS program is handled in accordance with our <a href="/privacy" class="underline font-bold text-brand-black">Privacy Policy</a>. For more information on how we collect, use, and protect your data, please review our Privacy Policy.
+        </p>
+
+        <h2 class="display text-3xl text-brand-black mt-10">Contact Us</h2>
+        <p class="mt-3 leading-relaxed">
+          If you have any questions regarding these Terms and Conditions, please contact us:
+        </p>
+        <ul class="mt-2 space-y-1.5 list-none pl-0 leading-relaxed">
+          <li>Email: <a href="mailto:team@neighborhoodhaulingut.com" class="underline font-bold text-brand-black">team@neighborhoodhaulingut.com</a></li>
+          <li>Phone: <a href="tel:+18015164149" class="underline font-bold text-brand-black">(801) 516-4149</a></li>
+          <li>Mail: 2081 W 13180 S, Riverton, UT 84065</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+  <Footer />
+</Layout>
+
+<style>
+  .prose-policy { line-height: 1.65; }
+  .prose-policy p, .prose-policy li { color: #1a1a1a; }
+</style>

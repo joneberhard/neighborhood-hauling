@@ -2,26 +2,51 @@
 import Layout from "../layouts/Layout.astro";
 import Header from "../components/Header.astro";
 import Hero from "../components/Hero.astro";
+import TrustStrip from "../components/TrustStrip.astro";
 import FeatureHero from "../components/FeatureHero.astro";
 import IconBenefits from "../components/IconBenefits.astro";
 import HowItWorks from "../components/HowItWorks.astro";
 import ServiceGrid from "../components/ServiceGrid.astro";
+import BeforeAfter from "../components/BeforeAfter.astro";
+import PricingTiers from "../components/PricingTiers.astro";
 import ServiceArea from "../components/ServiceArea.astro";
 import MeetMou from "../components/MeetMou.astro";
+import Reviews from "../components/Reviews.astro";
+import FAQ from "../components/FAQ.astro";
 import SecondaryCTA from "../components/SecondaryCTA.astro";
 import Footer from "../components/Footer.astro";
+import { faqPageSchema, reviewsSchema } from "../lib/schemas";
+import { faqs } from "../data/faq";
+import { reviews, aggregate } from "../data/reviews";
+
+const schemas: object[] = [faqPageSchema(faqs)];
+// Reviews on the home page render visually but DON'T emit Review/AggregateRating
+// schema — there's no specific Service node on this page to attach them to,
+// and self-serving reviews on LocalBusiness/MovingCompany trigger GSC's
+// "Invalid object type for field <parent_node>" error. Service-page reviews
+// are the right home for review-snippet rich results.
+void reviews; void aggregate; void reviewsSchema;
 ---
 
-<Layout>
+<Layout
+  title="Neighborhood Hauling & Junk Removal | Bluffdale, UT"
+  description="Local junk removal and hauling along the Wasatch Front. Founded by Bluffdale barber Mou. Trailer-based flat pricing, same-day quotes, fully licensed and insured. Keepin' the hood clean."
+  schemas={schemas}
+>
   <Header />
   <main>
     <Hero />
+    <TrustStrip />
     <FeatureHero />
-    <IconBenefits />
     <HowItWorks />
+    <BeforeAfter />
+    <PricingTiers />
     <ServiceGrid />
+    <Reviews />
+    <IconBenefits />
     <ServiceArea />
     <MeetMou />
+    <FAQ />
     <SecondaryCTA />
   </main>
   <Footer />

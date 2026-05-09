@@ -2,18 +2,18 @@
 const steps = [
   {
     n: "01",
-    title: "Get Your Price",
-    body: "Tell us what's going. Send photos or describe the load. We give you a clear, upfront quote within minutes.",
+    title: "Send a Picture",
+    body: "Snap a photo of what needs to go and send it through our form. Tell us where you are and we'll do the rest.",
   },
   {
     n: "02",
-    title: "Schedule a Pickup",
-    body: "Pick a day and a window that works for you. We text when we're on the way. No mystery, no missed slots.",
+    title: "Get a Free Quote & Pickup Time",
+    body: "We send back a flat quote and a pickup window during business hours. No on-site sales pitch, no estimates that move.",
   },
   {
     n: "03",
     title: "We Haul It Away",
-    body: "Point to the junk and we lift. We sweep up after, then sort, recycle, and donate whatever we can.",
+    body: "We show up, load it up, and sweep up after. You get your space back &mdash; and we sort, recycle, and donate whatever we can.",
   },
 ];
 ---
@@ -35,11 +35,11 @@ const steps = [
           <div class="absolute -top-5 left-6 skew-tag bg-brand-yellow text-brand-black">
             <span class="display italic text-xl">STEP {s.n}</span>
           </div>
-          <h3 class="display italic text-3xl text-brand-black mt-4 mb-4">{s.title}</h3>
-          <p class="text-ink/80 text-sm leading-relaxed">{s.body}</p>
+          <h3 class="display italic text-3xl text-brand-black mt-4 mb-4" set:html={s.title}></h3>
+          <p class="text-ink/80 text-sm leading-relaxed" set:html={s.body}></p>
           {i === 0 && (
-            <a href="#quote" class="btn-skew bg-brand-black text-brand-yellow text-sm mt-6">
-              <span>Book Now</span>
+            <a href="/contact" class="btn-skew bg-brand-black text-brand-yellow text-sm mt-6">
+              <span>Send Your Photo</span>
             </a>
           )}
         </div>
