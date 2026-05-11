@@ -1,7 +1,9 @@
 ---
-import { Image } from "astro:assets";
-import featureBefore from "../assets/jobs/job5-before.jpg";
-import featureAfter from "../assets/jobs/job5-after.jpg";
+import { cfImageUrl, cfImageSrcset } from "../lib/cfImage";
+
+const featureBefore = "jobs/job5-before.jpg";
+const featureAfter = "jobs/job5-after.jpg";
+const heroSizes = "(min-width: 1024px) 50vw, 100vw";
 ---
 
 <section class="bg-white py-20 lg:py-28">
@@ -15,26 +17,28 @@ import featureAfter from "../assets/jobs/job5-after.jpg";
           aria-label="Hero job: tap to toggle before and after"
         >
           <div class="ba-before absolute inset-0 transition-opacity duration-300">
-            <Image
-              src={featureBefore}
-              alt="Before the haul &mdash; the load Mou cleared out"
-              widths={[640, 960, 1280]}
-              sizes="(min-width: 1024px) 50vw, 100vw"
+            <img
+              src={cfImageUrl(featureBefore, 'card')}
+              srcset={cfImageSrcset(featureBefore)}
+              alt="Before the haul — the load Mou cleared out"
+              sizes={heroSizes}
               class="w-full h-full object-cover"
               loading="eager"
               fetchpriority="high"
+              decoding="async"
             />
             <div class="absolute top-3 left-3 bg-brand-black text-brand-yellow font-marker text-3xl px-4 py-1 leading-none">Before</div>
           </div>
 
           <div class="ba-after absolute inset-0 opacity-0 transition-opacity duration-300">
-            <Image
-              src={featureAfter}
-              alt="After the haul &mdash; clean and clear"
-              widths={[640, 960, 1280]}
-              sizes="(min-width: 1024px) 50vw, 100vw"
+            <img
+              src={cfImageUrl(featureAfter, 'card')}
+              srcset={cfImageSrcset(featureAfter)}
+              alt="After the haul — clean and clear"
+              sizes={heroSizes}
               class="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div class="absolute top-3 left-3 bg-brand-yellow text-brand-black font-marker text-3xl px-4 py-1 leading-none">After</div>
           </div>

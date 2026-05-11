@@ -5,8 +5,9 @@ import Footer from "../components/Footer.astro";
 import PageHero from "../components/PageHero.astro";
 import SecondaryCTA from "../components/SecondaryCTA.astro";
 import { breadcrumbListSchema } from "../lib/schemas";
-import { Image } from "astro:assets";
-import mouPortrait from "../assets/mou.jpg";
+import { cfImageUrl, cfImageSrcset } from "../lib/cfImage";
+
+const mouPortrait = "mou.jpg";
 
 const schemas = [
   breadcrumbListSchema([
@@ -35,7 +36,7 @@ const values = [
 ];
 ---
 
-<Layout title="About Mou & Neighborhood Hauling | Bluffdale, UT" description="The story behind Neighborhood Hauling. Founded by Bluffdale barber Mou, built on hard work, local respect, and the simple goal of keepin' the hood clean." schemas={schemas}>
+<Layout title="About Mou & Neighborhood Hauling | Riverton, UT" description="The story behind Neighborhood Hauling. Founded by Bluffdale barber Mou, built on hard work, local respect, and the simple goal of keepin' the hood clean." schemas={schemas}>
   <Header />
   <main>
     <PageHero
@@ -51,13 +52,14 @@ const values = [
         <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div class="relative">
             <div class="aspect-[3/4] bg-brand-black border-4 border-brand-black card-shadow overflow-hidden">
-              <Image
-                src={mouPortrait}
-                alt="Mou &mdash; founder of Neighborhood Hauling and Junk Removal"
-                widths={[480, 720, 1080]}
+              <img
+                src={cfImageUrl(mouPortrait, 'card')}
+                srcset={cfImageSrcset(mouPortrait)}
+                alt="Mou — founder of Neighborhood Hauling and Junk Removal"
                 sizes="(min-width: 1024px) 50vw, 100vw"
                 class="w-full h-full object-cover"
                 loading="lazy"
+                decoding="async"
               />
             </div>
             <div class="absolute -bottom-5 left-6 right-6 bg-brand-black border-2 border-brand-yellow px-5 py-3 text-center">

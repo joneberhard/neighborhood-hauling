@@ -1,26 +1,16 @@
 ---
-import { Image } from "astro:assets";
-import job1Before from "../assets/jobs/job1-before.jpg";
-import job1After from "../assets/jobs/job1-after.jpg";
-import job2Before from "../assets/jobs/job2-before.jpg";
-import job2After from "../assets/jobs/job2-after.jpg";
-import job5Before from "../assets/jobs/job5-before.jpg";
-import job5After from "../assets/jobs/job5-after.jpg";
-import job7Before from "../assets/jobs/job7-before.jpg";
-import job7After from "../assets/jobs/job7-after.jpg";
-import job9Before from "../assets/jobs/job9-before.jpg";
-import job9After from "../assets/jobs/job9-after.jpg";
-import job10Before from "../assets/jobs/job10-before.jpg";
-import job10After from "../assets/jobs/job10-after.jpg";
+import { cfImageUrl, cfImageSrcset } from "../lib/cfImage";
 
 const pairs = [
-  { id: "job1", before: job1Before, after: job1After, label: "Side-yard pickup" },
-  { id: "job2", before: job2Before, after: job2After, label: "Brick & paver haul" },
-  { id: "job5", before: job5Before, after: job5After, label: "Yard pile cleanout" },
-  { id: "job7", before: job7Before, after: job7After, label: "Pallets & landscape bags" },
-  { id: "job9", before: job9Before, after: job9After, label: "Playset teardown" },
-  { id: "job10", before: job10Before, after: job10After, label: "Move-out cleanup" },
+  { id: "job1", before: "jobs/job1-before.jpg", after: "jobs/job1-after.jpg", label: "Side-yard pickup" },
+  { id: "job2", before: "jobs/job2-before.jpg", after: "jobs/job2-after.jpg", label: "Brick & paver haul" },
+  { id: "job5", before: "jobs/job5-before.jpg", after: "jobs/job5-after.jpg", label: "Yard pile cleanout" },
+  { id: "job7", before: "jobs/job7-before.jpg", after: "jobs/job7-after.jpg", label: "Pallets & landscape bags" },
+  { id: "job9", before: "jobs/job9-before.jpg", after: "jobs/job9-after.jpg", label: "Playset teardown" },
+  { id: "job10", before: "jobs/job10-before.jpg", after: "jobs/job10-after.jpg", label: "Move-out cleanup" },
 ];
+
+const cardSizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
 ---
 
 <section id="proof" class="bg-white py-20 lg:py-28 relative">
@@ -46,25 +36,27 @@ const pairs = [
           aria-label={`${p.label}: tap to toggle before and after`}
         >
           <div class="ba-before absolute inset-0 transition-opacity duration-300">
-            <Image
-              src={p.before}
-              alt={`${p.label} &mdash; before`}
-              widths={[480, 720, 960]}
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            <img
+              src={cfImageUrl(p.before, 'card')}
+              srcset={cfImageSrcset(p.before)}
+              alt={`${p.label} — before`}
+              sizes={cardSizes}
               class="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div class="absolute top-3 left-3 bg-brand-black text-brand-yellow font-marker text-2xl px-4 py-1 leading-none">Before</div>
           </div>
 
           <div class="ba-after absolute inset-0 opacity-0 transition-opacity duration-300">
-            <Image
-              src={p.after}
-              alt={`${p.label} &mdash; after`}
-              widths={[480, 720, 960]}
-              sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+            <img
+              src={cfImageUrl(p.after, 'card')}
+              srcset={cfImageSrcset(p.after)}
+              alt={`${p.label} — after`}
+              sizes={cardSizes}
               class="w-full h-full object-cover"
               loading="lazy"
+              decoding="async"
             />
             <div class="absolute top-3 left-3 bg-brand-yellow text-brand-black font-marker text-2xl px-4 py-1 leading-none">After</div>
           </div>
@@ -95,13 +87,3 @@ const pairs = [
   .ba-card[data-ba-state="after"] .ba-after { opacity: 1; }
   /* No hover-flip: sticky :hover on touch devices was locking cards in AFTER state. */
 </style>
-
-<script>
-  const cards = document.querySelectorAll<HTMLButtonElement>("[data-ba]");
-  cards.forEach((card) => {
-    card.addEventListener("click", () => {
-      const next = card.dataset.baState === "after" ? "before" : "after";
-      card.dataset.baState = next;
-    });
-  });
-</script>
