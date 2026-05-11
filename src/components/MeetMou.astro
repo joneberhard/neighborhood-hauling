@@ -1,6 +1,7 @@
 ---
-import { Image } from "astro:assets";
-import mouPortrait from "../assets/mou.jpg";
+import { cfImageUrl, cfImageSrcset } from "../lib/cfImage";
+
+const mouPortrait = "mou.jpg";
 ---
 
 <section id="about" class="stripes py-20 lg:py-28 relative">
@@ -8,13 +9,14 @@ import mouPortrait from "../assets/mou.jpg";
     <div class="grid lg:grid-cols-2 gap-10 lg:gap-16 items-start">
       <div class="relative">
         <div class="aspect-[3/4] bg-brand-black border-4 border-brand-black card-shadow overflow-hidden">
-          <Image
-            src={mouPortrait}
-            alt="Mou &mdash; founder of Neighborhood Hauling and Junk Removal"
-            widths={[480, 720, 1080]}
+          <img
+            src={cfImageUrl(mouPortrait, 'card')}
+            srcset={cfImageSrcset(mouPortrait)}
+            alt="Mou — founder of Neighborhood Hauling and Junk Removal"
             sizes="(min-width: 1024px) 50vw, 100vw"
             class="w-full h-full object-cover"
             loading="lazy"
+            decoding="async"
           />
         </div>
         <a
