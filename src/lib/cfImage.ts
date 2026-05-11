@@ -1,10 +1,11 @@
 // Cloudflare Images URL helpers for Neighborhood Hauling.
 //
-// Images live on the Ghost Zero Cloudflare Images account. The intended
-// delivery domain is images.neighborhoodhaulingut.com (proxied to
-// imagedelivery.net), but that hostname currently returns CF error 1014.
-// Using the raw imagedelivery.net base until CF support resolves —
-// one-line flip on CF_IMAGES_BASE when it does.
+// Images live on the Ghost Zero Cloudflare Images account. Delivery is via
+// the site's own proxied domain using the /cdn-cgi/imagedelivery/ path —
+// Cloudflare's edge intercepts this path and serves the image directly.
+// No CNAME required. The previously created images.neighborhoodhaulingut.com
+// CNAME returned CF error 1014; correct pattern documented at
+// https://developers.cloudflare.com/images/manage-images/serve-images/serve-from-custom-domains/.
 //
 // File names from src/assets/ are converted to deterministic Cloudflare
 // Image IDs by slugging:
@@ -19,7 +20,7 @@
 //   - public    (original, built-in)
 
 const ACCOUNT_HASH = 'qPxaZUKncGiksK_4N8a1yg';
-export const CF_IMAGES_BASE = `https://imagedelivery.net/${ACCOUNT_HASH}`;
+export const CF_IMAGES_BASE = `https://neighborhoodhaulingut.com/cdn-cgi/imagedelivery/${ACCOUNT_HASH}`;
 export const CF_IMAGES_PREFIX = 'nbh_';
 
 export type CFVariant = 'thumbnail' | 'card' | 'hero' | 'headshot' | 'public';
