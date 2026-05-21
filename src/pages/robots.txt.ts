@@ -7,7 +7,6 @@ export const GET: APIRoute = ({ site }) => {
     : null;
 
   const lines: string[] = [];
-  lines.push('# robots.txt — see C:\\dev\\_playbooks\\ai-seo-playbook.md');
   lines.push('# Strategy: allow normal + AI search/citation bots, block AI training crawlers.');
   lines.push('');
   lines.push('User-agent: *');

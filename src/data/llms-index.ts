@@ -3,7 +3,7 @@
 
 export const llmsIndex = {
   name: 'Neighborhood Hauling & Junk Removal',
-  description: 'Bluffdale-based junk removal and hauling along the Wasatch Front. Trailer-based flat pricing, same-day quotes, fully licensed and insured.',
+  description: 'Riverton-based junk removal and hauling along the Wasatch Front. Trailer-based flat pricing, same-day quotes, fully licensed and insured.',
   longDescription: [
     'Neighborhood Hauling is a local, owner-operated junk removal company founded by Bluffdale barber Mou. We serve Bluffdale, Riverton, Herriman, Draper, South Jordan, and surrounding Wasatch Front communities.',
     'Pricing is flat by trailer-fill — no hourly surprises. Same-day or next-day pickup is common. Fully licensed and insured.',

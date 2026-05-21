@@ -1,0 +1,4 @@
+# Cloudflare Pages redirects
+
+# Crawlers commonly request /sitemap.xml — Astro generates /sitemap-index.xml
+/sitemap.xml                        /sitemap-index.xml                         301
