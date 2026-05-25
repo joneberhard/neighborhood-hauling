@@ -87,3 +87,14 @@ const cardSizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
   .ba-card[data-ba-state="after"] .ba-after { opacity: 1; }
   /* No hover-flip: sticky :hover on touch devices was locking cards in AFTER state. */
 </style>
+
+<script>
+  // Tap toggles before/after. Selects every [data-ba] on the page, so this
+  // single handler covers both the BeforeAfter cards and the FeatureHero card.
+  const cards = document.querySelectorAll<HTMLButtonElement>("[data-ba]");
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      card.dataset.baState = card.dataset.baState === "after" ? "before" : "after";
+    });
+  });
+</script>
