@@ -39,8 +39,17 @@ The reference has a full-width photo as a visual breather. The current `FeatureH
 | Contact form backend | `src/pages/contact.astro` | Replace `YOUR_WEB3FORMS_ACCESS_KEY` with a real key from web3forms.com (free, ~1 min). Form fails silently until set. |
 | Optional Google Maps embed | `src/pages/contact.astro` | Replace the placeholder square next to the service-area copy with an iframe embed if desired. |
 
+## Deployment
+
+The GitHub repo **is** connected to Cloudflare Pages: merging to `main`
+auto-builds (`npm run build` → `dist/`) and deploys to
+https://neighborhoodhaulingut.com. No `wrangler` step needed. Watch progress
+in Cloudflare dashboard → Workers & Pages → project → Deployments. After a
+deploy, hard-refresh (Cmd/Ctrl+Shift+R) to bypass cache.
+
+Images are served from Cloudflare Images via the `/cdn-cgi/imagedelivery/`
+path (see `src/lib/cfImage.ts`).
+
 ## Future ideas (not committed)
 
-- Connect the GitHub repo to the Cloudflare Pages project for auto-deploy on `git push` (Cloudflare dashboard → Pages → neighborhood-hauling → Settings → Builds & deployments → Connect to Git).
 - Add a blog/news collection (`src/content/`) for SEO if Mou wants to publish.
-- Schema.org `LocalBusiness` JSON-LD in the layout for richer Google results.
