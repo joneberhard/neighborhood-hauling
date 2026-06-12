@@ -2,12 +2,54 @@
 import { cfImageUrl, cfImageSrcset } from "../lib/cfImage";
 
 const pairs = [
-  { id: "job1", before: "jobs/job1-before.jpg", after: "jobs/job1-after.jpg", label: "Side-yard pickup" },
-  { id: "job2", before: "jobs/job2-before.jpg", after: "jobs/job2-after.jpg", label: "Brick & paver haul" },
-  { id: "job5", before: "jobs/job5-before.jpg", after: "jobs/job5-after.jpg", label: "Yard pile cleanout" },
-  { id: "job7", before: "jobs/job7-before.jpg", after: "jobs/job7-after.jpg", label: "Pallets & landscape bags" },
-  { id: "job9", before: "jobs/job9-before.jpg", after: "jobs/job9-after.jpg", label: "Playset teardown" },
-  { id: "job10", before: "jobs/job10-before.jpg", after: "jobs/job10-after.jpg", label: "Move-out cleanup" },
+  {
+    id: "job1",
+    before: "jobs/job1-before.jpg",
+    after: "jobs/job1-after.jpg",
+    label: "Side-yard pickup",
+    altBefore: "Gravel side yard cluttered with an old washing machine, barbecue grill, bike, tires, and scrap boards",
+    altAfter: "The same gravel side yard cleared of junk, leaving just the AC unit and trash bin",
+  },
+  {
+    id: "job2",
+    before: "jobs/job2-before.jpg",
+    after: "jobs/job2-after.jpg",
+    label: "Brick & paver haul",
+    altBefore: "Utility trailer heaped with broken bricks and pavers at the landfill",
+    altAfter: "The same trailer empty and swept out after dumping the brick load",
+  },
+  {
+    id: "job5",
+    before: "jobs/job5-before.jpg",
+    after: "jobs/job5-after.jpg",
+    label: "Yard pile cleanout",
+    altBefore: "Pile of dried tree branches, wooden pallets, and old yard equipment stacked against the side of a house",
+    altAfter: "The same concrete side patio swept clean after the pile was hauled away",
+  },
+  {
+    id: "job7",
+    before: "jobs/job7-before.jpg",
+    after: "jobs/job7-after.jpg",
+    label: "Pallets & landscape bags",
+    altBefore: "Wooden pallet frames and bags of landscaping mix lined up along a house's side walkway",
+    altAfter: "The walkway cleared, with the remaining bags of landscape mix stacked neatly against the wall",
+  },
+  {
+    id: "job9",
+    before: "jobs/job9-before.jpg",
+    after: "jobs/job9-after.jpg",
+    label: "Playset teardown",
+    altBefore: "Disassembled wooden playset and slide pieces lying on a backyard lawn",
+    altAfter: "The backyard lawn open and clear after the playset was hauled off",
+  },
+  {
+    id: "job10",
+    before: "jobs/job10-before.jpg",
+    after: "jobs/job10-after.jpg",
+    label: "Move-out cleanup",
+    altBefore: "Driveway piled with flattened cardboard boxes, a mattress, and leftover furniture from a move-out",
+    altAfter: "The same driveway swept clear after the move-out haul",
+  },
 ];
 
 const cardSizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
@@ -39,7 +81,7 @@ const cardSizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
             <img
               src={cfImageUrl(p.before, 'card')}
               srcset={cfImageSrcset(p.before)}
-              alt={`${p.label} — before`}
+              alt={`${p.label}, before: ${p.altBefore}`}
               sizes={cardSizes}
               class="w-full h-full object-cover"
               loading="lazy"
@@ -52,7 +94,7 @@ const cardSizes = "(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw";
             <img
               src={cfImageUrl(p.after, 'card')}
               srcset={cfImageSrcset(p.after)}
-              alt={`${p.label} — after`}
+              alt={`${p.label}, after: ${p.altAfter}`}
               sizes={cardSizes}
               class="w-full h-full object-cover"
               loading="lazy"
