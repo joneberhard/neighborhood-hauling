@@ -1,0 +1,184 @@
+<!doctype html>
+<!--
+  Source for public/og-default.jpg (1200x630 social share card).
+  Render with: node og/render.mjs   (from the repo root or og/)
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Anton&family=IBM+Plex+Mono:wght@400;500;600;700&family=Permanent+Marker&display=swap"
+  rel="stylesheet"
+/>
+<style>
+  :root {
+    --yellow: #ffd400;
+    --black: #0a0a0a;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { width: 1200px; height: 630px; overflow: hidden; }
+
+  .card {
+    position: relative;
+    width: 1200px;
+    height: 630px;
+    background: var(--black);
+    font-family: "IBM Plex Mono", monospace;
+    overflow: hidden;
+  }
+
+  /* faint diagonal texture so the black isn't dead flat */
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      -45deg,
+      rgba(255, 212, 0, 0.035) 0 2px,
+      transparent 2px 18px
+    );
+  }
+
+  .hazard {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 14px;
+    background: repeating-linear-gradient(
+      45deg,
+      var(--yellow) 0 22px,
+      var(--black) 22px 44px
+    );
+  }
+  .hazard.top { top: 0; }
+  .hazard.bottom { bottom: 0; }
+
+  .left {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 64px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+  }
+
+  .logo { width: 540px; display: block; }
+
+  .headline {
+    font-family: "Anton", sans-serif;
+    font-size: 76px;
+    line-height: 1.02;
+    letter-spacing: 1px;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+  .headline .stroke {
+    color: transparent;
+    -webkit-text-stroke: 2.5px var(--yellow);
+  }
+
+  .tag {
+    align-self: flex-start;
+    background: var(--yellow);
+    color: var(--black);
+    transform: skewX(-8deg);
+    padding: 10px 22px;
+  }
+  .tag span {
+    display: block;
+    transform: skewX(8deg);
+    font-weight: 700;
+    font-size: 21px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .url {
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: 2px;
+  }
+  .url::before { content: "▸ "; color: var(--yellow); }
+
+  /* before/after snapshots */
+  .shots {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 30px;
+    width: 470px;
+  }
+  .shot {
+    position: absolute;
+    width: 300px;
+    height: 330px;
+    background: var(--black);
+    border: 5px solid var(--yellow);
+    box-shadow: 10px 10px 0 rgba(255, 212, 0, 0.25);
+  }
+  .shot img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .shot .label {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    font-family: "Permanent Marker", cursive;
+    font-size: 30px;
+    color: var(--yellow);
+    background: var(--black);
+    padding: 2px 14px;
+    transform: rotate(-2deg);
+  }
+  .shot.before {
+    top: 58px;
+    left: 0;
+    transform: rotate(-3.5deg);
+    z-index: 1;
+  }
+  .shot.after {
+    top: 220px;
+    left: 165px;
+    transform: rotate(2.5deg);
+    z-index: 2;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="hazard top"></div>
+
+    <div class="left">
+      <img class="logo" src="../public/logo-white.webp" alt="" />
+      <div class="headline">
+        Keepin' the<br />
+        <span class="stroke">Hood Clean.</span>
+      </div>
+      <div class="tag"><span>Riverton, Utah</span></div>
+      <div class="url">neighborhoodhaulingut.com</div>
+    </div>
+
+    <div class="shots">
+      <div class="shot before">
+        <img src="assets/job5-before.jpg" alt="" />
+        <div class="label">BEFORE</div>
+      </div>
+      <div class="shot after">
+        <img src="assets/job5-after.jpg" alt="" />
+        <div class="label">AFTER</div>
+      </div>
+    </div>
+
+    <div class="hazard bottom"></div>
+  </div>
+</body>
+</html>
