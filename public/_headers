@@ -19,7 +19,10 @@
   Cache-Control: public, max-age=31536000, immutable
 /logo-color.jpg
   Cache-Control: public, max-age=31536000, immutable
+# Favicon: short cache (NOT immutable) — it lives at a stable filename but its
+# contents do change. Immutable here strands the old icon for a year (it did).
+# Bump the ?v= query in Layout.astro when the icon changes to break edge cache.
 /favicon.ico
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400
 /favicon.svg
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=86400
