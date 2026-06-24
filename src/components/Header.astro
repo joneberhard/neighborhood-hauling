@@ -5,83 +5,113 @@ const path = Astro.url.pathname;
 const isActive = (href: string) =>
   href === "/" ? path === "/" : path === href || path.startsWith(href + "/");
 
-const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
-  { href: "/", label: "Home" },
-  { href: "/services", label: "Services", submenu: services },
-  { href: "/pricing", label: "Pricing" },
-  { href: "/reviews", label: "Reviews" },
-  { href: "/#faq", label: "FAQ" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+type Sub = { label: string; href: string };
+type NavLink = { label: string; href?: string; overview?: string; sub?: Sub[] };
+
+// Top level capped at ~5 per the nav-structure SOP: secondary pages (About,
+// Reviews, FAQ) fold into a single "Company" dropdown instead of crowding the bar.
+const navLinks: NavLink[] = [
+  { label: "Home", href: "/" },
+  {
+    label: "Services",
+    href: "/services",
+    overview: "All Services",
+    sub: services.map((s) => ({ label: s.title, href: `/services/${s.slug}` })),
+  },
+  { label: "Pricing", href: "/pricing" },
+  {
+    label: "Company",
+    sub: [
+      { label: "About Mou", href: "/about" },
+      { label: "Reviews", href: "/reviews" },
+      { label: "FAQ", href: "/#faq" },
+    ],
+  },
+  { label: "Contact", href: "/contact" },
 ];
+
+// A sub-item only counts as "active" when it's a real page on the current path
+// (anchor links like /#faq never mark the parent active).
+const isSubActive = (s: Sub) => !s.href.includes("#") && isActive(s.href);
+const linkActive = (l: NavLink) =>
+  (l.href ? isActive(l.href) : false) || (l.sub?.some(isSubActive) ?? false);
+
+const linkBase =
+  "font-display italic uppercase hover:text-brand-yellow transition-colors text-lg tracking-wide";
+const triggerBase = `${linkBase} flex items-center gap-1.5 py-1`;
+const panelBase =
+  "invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-150 absolute top-full left-0 pt-3 w-64 z-40";
+const mLink = "block display italic text-3xl py-3 hover:text-brand-yellow transition-colors";
 ---
 
-<header class="sticky top-0 z-30 bg-brand-black/95 backdrop-blur-md border-b border-brand-yellow/40 supports-[backdrop-filter]:bg-brand-black/85">
+<header
+  id="site-header"
+  class="sticky top-0 z-30 bg-brand-black/95 backdrop-blur-md border-b border-brand-yellow/40 supports-[backdrop-filter]:bg-brand-black/85"
+>
   <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
-    <div class="flex items-center justify-between py-3 md:py-4 gap-4">
+    <div class="nav-row flex items-center justify-between py-3 md:py-4 gap-4">
       <a href="/" class="flex items-center shrink-0" aria-label="Neighborhood Hauling and Junk Removal">
         <img
           src="/logo-white.webp"
           alt="Neighborhood Hauling and Junk Removal"
           width="200"
           height="76"
-          class="h-12 sm:h-14 w-auto"
+          class="logo h-12 sm:h-14 w-auto"
           loading="eager"
           decoding="async"
         />
       </a>
 
-      <nav class="hidden lg:flex items-center gap-10">
+      <nav class="hidden lg:flex items-center gap-9">
         {navLinks.map((link) => {
-          const active = isActive(link.href);
-          if (!link.submenu) {
+          const active = linkActive(link);
+          if (!link.sub) {
             return (
               <a
                 href={link.href}
-                class:list={[
-                  "font-display italic uppercase hover:text-brand-yellow transition-colors text-lg tracking-wide",
-                  active ? "text-brand-yellow" : "text-white",
-                ]}
+                class:list={[linkBase, active ? "text-brand-yellow" : "text-white"]}
               >
                 {link.label}
               </a>
             );
           }
+          const chevron = (
+            <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="currentColor" aria-hidden="true"><path d="M6 9l6 6 6-6z"/></svg>
+          );
           return (
             <div class="group relative">
-              <a
-                href={link.href}
-                aria-haspopup="true"
-                class:list={[
-                  "font-display italic uppercase hover:text-brand-yellow transition-colors text-lg tracking-wide flex items-center gap-1.5 py-1",
-                  active ? "text-brand-yellow" : "text-white",
-                ]}
-              >
-                {link.label}
-                <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" fill="currentColor" aria-hidden="true"><path d="M6 9l6 6 6-6z"/></svg>
-              </a>
-              <div
-                class="invisible opacity-0 translate-y-1 group-hover:visible group-hover:opacity-100 group-hover:translate-y-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-0 transition-all duration-150 absolute top-full left-0 pt-3 w-72 z-40"
-                role="menu"
-              >
+              {link.href ? (
+                <a href={link.href} aria-haspopup="true" class:list={[triggerBase, active ? "text-brand-yellow" : "text-white"]}>
+                  {link.label}
+                  {chevron}
+                </a>
+              ) : (
+                <button type="button" aria-haspopup="true" class:list={[triggerBase, active ? "text-brand-yellow" : "text-white"]}>
+                  {link.label}
+                  {chevron}
+                </button>
+              )}
+              <div class={panelBase} role="menu">
                 <div class="bg-brand-black border-2 border-brand-yellow shadow-[8px_8px_0_0_rgba(255,212,0,0.15)]">
-                  <a
-                    href={link.href}
-                    class="block px-5 py-3 font-mono text-[11px] tracking-widest text-brand-yellow border-b border-brand-yellow/30 hover:bg-brand-yellow hover:text-brand-black transition-colors"
-                    role="menuitem"
-                  >
-                    ALL SERVICES &gt;&gt;
-                  </a>
-                  {link.submenu.map((s) => (
+                  {link.overview && link.href && (
                     <a
-                      href={`/services/${s.slug}`}
+                      href={link.href}
+                      class="block px-5 py-3 font-mono text-[11px] tracking-widest text-brand-yellow border-b border-brand-yellow/30 hover:bg-brand-yellow hover:text-brand-black transition-colors"
+                      role="menuitem"
+                    >
+                      {link.overview.toUpperCase()} &gt;&gt;
+                    </a>
+                  )}
+                  {link.sub.map((s) => (
+                    <a
+                      href={s.href}
                       class:list={[
                         "block px-5 py-3 font-mono text-sm hover:bg-brand-yellow hover:text-brand-black transition-colors border-b border-white/5 last:border-0",
-                        path === `/services/${s.slug}` ? "text-brand-yellow" : "text-white/90",
+                        isSubActive(s) ? "text-brand-yellow" : "text-white/90",
                       ]}
                       role="menuitem"
                     >
-                      {s.title}
+                      {s.label}
                     </a>
                   ))}
                 </div>
@@ -109,6 +139,7 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
           id="mobile-menu-open"
           type="button"
           class="lg:hidden size-11 flex items-center justify-center bg-brand-yellow text-brand-black hover:translate-y-[-2px] transition-transform"
+          style="touch-action: manipulation;"
           aria-label="Open menu"
           aria-controls="mobile-menu"
           aria-expanded="false"
@@ -156,73 +187,50 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
     </button>
   </div>
 
-  <nav class="px-4 sm:px-6 py-6">
-    <a
-      href="/"
-      class:list={[
-        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
-        path === "/" ? "text-brand-yellow" : "text-white",
-      ]}
-    >Home</a>
-
-    <div class="border-b border-white/10">
-      <a
-        href="/services"
-        class:list={[
-          "block display italic text-3xl py-3 hover:text-brand-yellow transition-colors flex items-center justify-between",
-          path === "/services" ? "text-brand-yellow" : "text-white",
-        ]}
-      >
-        Services
-        <span class="font-mono text-[10px] tracking-widest text-brand-yellow">ALL &gt;</span>
-      </a>
-      <ul class="pb-4 pl-1 space-y-1">
-        {services.map((s) => (
-          <li>
-            <a
-              href={`/services/${s.slug}`}
-              class:list={[
-                "block py-2.5 pl-4 border-l-2 font-mono text-sm hover:text-brand-yellow hover:border-brand-yellow transition-colors",
-                path === `/services/${s.slug}`
-                  ? "text-brand-yellow border-brand-yellow"
-                  : "text-white/80 border-white/20",
-              ]}
-            >
-              {s.title}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </div>
-
-    <a
-      href="/pricing"
-      class:list={[
-        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
-        isActive("/pricing") ? "text-brand-yellow" : "text-white",
-      ]}
-    >Pricing</a>
-
-    <a
-      href="/#faq"
-      class="block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors text-white"
-    >FAQ</a>
-
-    <a
-      href="/about"
-      class:list={[
-        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
-        isActive("/about") ? "text-brand-yellow" : "text-white",
-      ]}
-    >About</a>
-
-    <a
-      href="/contact"
-      class:list={[
-        "block display italic text-3xl py-3 border-b border-white/10 hover:text-brand-yellow transition-colors",
-        isActive("/contact") ? "text-brand-yellow" : "text-white",
-      ]}
-    >Contact</a>
+  <nav class="px-4 sm:px-6 py-6 flex flex-col" style="justify-content: flex-start;">
+    {navLinks.map((link) => {
+      const active = linkActive(link);
+      if (!link.sub) {
+        return (
+          <a
+            href={link.href}
+            class:list={[mLink, "border-b border-white/10", active ? "text-brand-yellow" : "text-white"]}
+          >
+            {link.label}
+          </a>
+        );
+      }
+      return (
+        <details class="border-b border-white/10">
+          <summary class:list={[mLink, "flex items-center justify-between", active ? "text-brand-yellow" : "text-white"]}>
+            {link.label}
+            <svg viewBox="0 0 24 24" class="chev w-6 h-6 text-brand-yellow" fill="currentColor" aria-hidden="true"><path d="M6 9l6 6 6-6z"/></svg>
+          </summary>
+          <ul class="pb-4 pl-1 space-y-1">
+            {link.overview && link.href && (
+              <li>
+                <a href={link.href} class="block py-2.5 pl-4 border-l-2 border-brand-yellow/60 font-mono text-[11px] tracking-widest text-brand-yellow hover:border-brand-yellow transition-colors">
+                  {link.overview.toUpperCase()} &gt;
+                </a>
+              </li>
+            )}
+            {link.sub.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  class:list={[
+                    "block py-2.5 pl-4 border-l-2 font-mono text-sm hover:text-brand-yellow hover:border-brand-yellow transition-colors",
+                    isSubActive(s) ? "text-brand-yellow border-brand-yellow" : "text-white/80 border-white/20",
+                  ]}
+                >
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </details>
+      );
+    })}
 
     <div class="mt-8 space-y-4">
       <a href="/contact" class="btn-skew bg-brand-yellow text-brand-black text-base w-full justify-center flex">
@@ -241,7 +249,49 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
   </nav>
 </div>
 
+<style>
+  /* Direction-aware slim-on-scroll — portfolio-standard header behavior.
+     Transition padding + logo + background, never height/display (anti-jank). */
+  .nav-row { transition: padding 0.18s ease; }
+  #site-header .logo { transition: height 0.18s ease; }
+  #site-header { transition: background-color 0.18s ease, box-shadow 0.18s ease; }
+
+  :global(html.header-slim) .nav-row { padding-top: 0.4rem; padding-bottom: 0.4rem; }
+  :global(html.header-slim) #site-header .logo { height: 2.25rem; }
+  :global(html.header-slim) #site-header {
+    background-color: rgba(10, 10, 10, 0.8);
+    box-shadow: 0 1px 0 rgba(255, 212, 0, 0.18);
+  }
+
+  /* keyboard focus into the nav forces it full + solid (never focus a shrinking target) */
+  :global(html.header-slim) #site-header:focus-within .nav-row { padding-top: 1rem; padding-bottom: 1rem; }
+  :global(html.header-slim) #site-header:focus-within .logo { height: 3.5rem; }
+  :global(html.header-slim) #site-header:focus-within { background-color: rgb(10, 10, 10); }
+
+  /* in-page #anchor jumps (e.g. FAQ) land below the sticky bar, sized to the slim height */
+  :global(html) { scroll-padding-top: 5rem; }
+
+  /* mobile collapsible submenus (start collapsed per the mobile-menu SOP) */
+  #mobile-menu details > summary { list-style: none; cursor: pointer; }
+  #mobile-menu details > summary::-webkit-details-marker { display: none; }
+  .chev { transition: transform 0.18s ease; }
+  #mobile-menu details[open] .chev { transform: rotate(180deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .nav-row, #site-header, #site-header .logo, .chev { transition: none; }
+  }
+</style>
+
 <script>
+  const root = document.documentElement;
+  const header = document.getElementById("site-header");
+
+  // Publish the live header height so sticky siblings can ride it (--header-h).
+  const syncH = () => {
+    if (header) root.style.setProperty("--header-h", header.offsetHeight + "px");
+  };
+
+  // --- Mobile drawer ---
   const btnOpen = document.getElementById("mobile-menu-open");
   const btnClose = document.getElementById("mobile-menu-close");
   const menu = document.getElementById("mobile-menu");
@@ -249,15 +299,47 @@ const navLinks: { href: string; label: string; submenu?: typeof services }[] = [
   const setOpen = (open: boolean) => {
     if (!menu || !btnOpen) return;
     menu.classList.toggle("hidden", !open);
-    document.body.classList.toggle("overflow-hidden", open);
+    // Scroll-lock on <html>, NOT <body> (body lock + overflow-x guard un-sticks the header).
+    root.classList.toggle("overflow-hidden", open);
     btnOpen.setAttribute("aria-expanded", String(open));
   };
 
   btnOpen?.addEventListener("click", () => setOpen(true));
   btnClose?.addEventListener("click", () => setOpen(false));
+  // Tapping any link closes the drawer (covers same-page anchor links like /#faq).
+  menu?.querySelectorAll("a").forEach((a) => a.addEventListener("click", () => setOpen(false)));
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && menu && !menu.classList.contains("hidden")) {
-      setOpen(false);
-    }
+    if (e.key === "Escape" && menu && !menu.classList.contains("hidden")) setOpen(false);
   });
+
+  // --- Direction-aware slim-on-scroll ---
+  const DELTA = 6;       // ignore scroll jitter below this many px
+  const TOP_FULL = 64;   // always full within this many px of the top
+  const COOLDOWN = 320;  // absorb the slim-reflow self-nudge after a toggle
+  let lastY = Math.max(0, window.scrollY);
+  let ticking = false;
+  let lastToggle = 0;
+
+  const setSlim = (on: boolean) => {
+    if (root.classList.contains("header-slim") !== on) {
+      root.classList.toggle("header-slim", on);
+      lastToggle = performance.now();
+    }
+  };
+  const update = () => {
+    ticking = false;
+    const y = Math.max(0, window.scrollY);            // clamp iOS overscroll
+    if (y <= TOP_FULL) { setSlim(false); lastY = y; return; }
+    if (performance.now() - lastToggle < COOLDOWN) { lastY = y; return; }
+    if (Math.abs(y - lastY) > DELTA) { setSlim(y > lastY); lastY = y; }
+  };
+
+  addEventListener("scroll", () => {
+    if (!ticking) { ticking = true; requestAnimationFrame(update); }
+  }, { passive: true });
+  addEventListener("resize", syncH, { passive: true });
+  header?.addEventListener("transitionend", syncH);
+  addEventListener("load", syncH);
+  syncH();
+  update();   // set correct state on load (deep-link / reload mid-page)
 </script>
