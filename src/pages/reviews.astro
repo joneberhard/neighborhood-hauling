@@ -1,0 +1,66 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import PageHero from "../components/PageHero.astro";
+import SecondaryCTA from "../components/SecondaryCTA.astro";
+import { breadcrumbListSchema } from "../lib/schemas";
+
+const schemas = [
+  breadcrumbListSchema([
+    { name: "Home", url: "/" },
+    { name: "Reviews", url: "/reviews/" },
+  ]),
+];
+
+// Mou's actual Google Business Profile. Tapping this opens the GBP in Google
+// Maps where customers can hit "Write a review." Matches Reviews.astro.
+const googleReviewUrl = "https://maps.app.goo.gl/oN3CrLU3eVEZMi6V9";
+---
+
+<Layout
+  title="Customer Reviews | Neighborhood Hauling & Junk Removal | Riverton, UT"
+  description="Real reviews from neighbors across the Wasatch Front. See what folks are saying about Mou and the Neighborhood Hauling crew, then leave a word about your own job."
+  schemas={schemas}
+>
+  <Header />
+  <main>
+    <PageHero
+      eyebrow="REAL JOBS · REAL WORDS"
+      title="What Neighbors"
+      highlight="Are Saying."
+      description="Every review here comes from a real job along the Wasatch Front. If we've cleared your garage, hauled your old couch, or knocked out a cleanout, we'd be grateful for a word about it."
+      breadcrumb={[{ label: "Home", href: "/" }, { label: "Reviews", href: "/reviews" }]}
+    />
+
+    <section class="stripes py-20 lg:py-28">
+      <div class="mx-auto max-w-5xl px-4 sm:px-6 lg:px-10">
+        <div class="bg-white border-4 border-brand-black p-4 sm:p-6 lg:p-8 card-shadow">
+          <!-- Live Google reviews via Mou's LeadConnector / HighLevel reputation
+               widget (full review-list widget, distinct from the compact home
+               page embed). It renders its own star ratings and cards, so we
+               don't emit Review schema for it. -->
+          <iframe
+            class="lc_reviews_widget"
+            src="https://reputationhub.site/reputation/widgets/review_widget/8t32gA0HsNvC39O8FgAp?widgetId=6a3c13524e323821aba49ac2"
+            frameborder="0"
+            scrolling="no"
+            style="min-width: 100%; width: 100%;"
+            title="Customer reviews for Neighborhood Hauling"
+          ></iframe>
+        </div>
+
+        <div class="mt-10 text-center">
+          <a href={googleReviewUrl} target="_blank" rel="noopener" class="inline-flex btn-skew bg-brand-black text-brand-yellow text-base">
+            <span>Leave Mou a Review</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <SecondaryCTA />
+  </main>
+  <Footer />
+
+  <script src="https://reputationhub.site/reputation/assets/review-widget.js" is:inline></script>
+</Layout>

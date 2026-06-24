@@ -57,7 +57,24 @@ const googleReviewUrl = "https://maps.app.goo.gl/oN3CrLU3eVEZMi6V9";
       </div>
     )}
 
-    {hasRealReviews ? (
+    {isHome ? (
+      // Live Google reviews via Mou's LeadConnector / HighLevel reputation
+      // widget. This is the real review source for the home page, so it
+      // replaces the static grid/placeholder here. The widget renders its own
+      // star ratings and cards, so we don't emit Review schema for it (same
+      // reasoning as the schema note in src/pages/index.astro). The companion
+      // <script> is loaded once at the bottom of this section.
+      <div class="bg-white border-4 border-brand-black p-4 sm:p-6 card-shadow">
+        <iframe
+          class="lc_reviews_widget"
+          src="https://reputationhub.site/reputation/widgets/review_widget/8t32gA0HsNvC39O8FgAp"
+          frameborder="0"
+          scrolling="no"
+          style="min-width: 100%; width: 100%;"
+          title="Customer reviews for Neighborhood Hauling"
+        ></iframe>
+      </div>
+    ) : hasRealReviews ? (
       <div class:list={[
         "grid gap-5",
         isHome ? "sm:grid-cols-2 lg:grid-cols-3" : "sm:grid-cols-2",
@@ -99,4 +116,8 @@ const googleReviewUrl = "https://maps.app.goo.gl/oN3CrLU3eVEZMi6V9";
       </div>
     )}
   </div>
+
+  {isHome && (
+    <script src="https://reputationhub.site/reputation/assets/review-widget.js" is:inline></script>
+  )}
 </section>

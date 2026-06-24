@@ -25,6 +25,7 @@ export const llmsIndex = {
       items: [
         { title: 'About Neighborhood Hauling', path: '/about', description: 'Founder story — Bluffdale barber Mou — and what makes us different.' },
         { title: 'Pricing', path: '/pricing', description: 'Trailer-fill flat pricing breakdown: 1/4 trailer $130, 1/2 to 3/4 $230–$330, full trailer $430.' },
+        { title: 'Customer Reviews', path: '/reviews', description: 'Real reviews from neighbors across the Wasatch Front who have had junk hauled or properties cleared out by Mou and the crew.' },
         { title: 'Get a Quote', path: '/contact', description: 'Send a photo for a same-day flat quote — text, call, or web form.' },
       ],
     },
