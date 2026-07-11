@@ -7,7 +7,7 @@
 // Idempotent: queries CF for each ID first and skips files already uploaded.
 // Writes scripts/image-mapping.json as a local record (gitignored).
 //
-// ID convention: ssp_<slug-of-filename> where slug = lowercase, non-alnum -> _,
+// ID convention: nbh_<slug-of-filename> where slug = lowercase, non-alnum -> _,
 // collapsed and trimmed. Stable across re-runs and matches the per-site
 // prefix table in docs/CLOUDFLARE_IMAGES_MIGRATION.md §3.1 on the
 // claude/app-store-infrastructure-iaO1H branch of astro-test-site.
