@@ -34,9 +34,6 @@ The reference has a full-width photo as a visual breather. The current `FeatureH
 
 | Where | File / location | What |
 |---|---|---|
-| Hero image on homepage | `public/truck.jpg` | Real photo of Mou + truck. Referenced from `src/components/FeatureHero.astro`. |
-| Mou portrait | `public/mou.jpg` | Real portrait. Referenced from `src/components/MeetMou.astro` and `src/pages/about.astro`. |
-| Contact form backend | `src/pages/contact.astro` | Replace `YOUR_WEB3FORMS_ACCESS_KEY` with a real key from web3forms.com (free, ~1 min). Form fails silently until set. |
 | Optional Google Maps embed | `src/pages/contact.astro` | Replace the placeholder square next to the service-area copy with an iframe embed if desired. |
 
 ## Deployment
