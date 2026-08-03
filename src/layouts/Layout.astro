@@ -31,6 +31,16 @@ const allSchemas = [localBusinessSchema, websiteSchema, ...schemas];
     <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
     <link rel="icon" href="/favicon.ico?v=2" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    {/* Google tag (gtag.js). GA4 reporting. No Ads conversions on this site. */}
+    <script async is:inline src="https://www.googletagmanager.com/gtag/js?id=G-WPDT3JQ0VL"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-WPDT3JQ0VL');
+    </script>
+
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
