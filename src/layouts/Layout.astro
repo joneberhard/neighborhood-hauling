@@ -41,6 +41,9 @@ const allSchemas = [localBusinessSchema, websiteSchema, ...schemas];
       gtag('config', 'G-WPDT3JQ0VL');
     </script>
 
+    {/* Umami analytics, self-hosted. Reports bounce rate, visit duration and events, which Cloudflare Web Analytics cannot because it is cookieless with no sessions. */}
+    <script defer is:inline src="https://analytics.ghost000.com/script.js" data-website-id="eb393471-3454-44ec-8bc4-2351c70ce2a1"></script>
+
     <meta name="generator" content={Astro.generator} />
     <meta name="description" content={description} />
     {noindex && <meta name="robots" content="noindex,nofollow" />}
