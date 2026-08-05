@@ -57,6 +57,32 @@ const schemas = [
               ></iframe>
             </div>
             <script src="https://link.msgsndr.com/js/form_embed.js" is:inline></script>
+            <script is:inline>
+              /* Umami `booking-start` — named identically on every site in the
+                 portfolio. This is the ONLY lead-capture surface on this site
+                 (there is no native form, so there is no form-submit event to
+                 fire). It is a cross-origin HighLevel iframe: it swallows its
+                 own clicks and its submissions are invisible from here, so the
+                 only honest parent-side signal that a visitor STARTED the quote
+                 request is focus crossing into the frame. Fires once per
+                 pageload. Guarded — the tracker is deferred and may be blocked. */
+              (function () {
+                var id = "inline-ErRRyunhwGfKzdc7VxLR";
+                window.addEventListener("blur", function () {
+                  setTimeout(function () {
+                    if (window.__umamiBookingStarted) return;
+                    var el = document.activeElement;
+                    if (!el || el.id !== id) return;
+                    window.__umamiBookingStarted = true;
+                    try {
+                      if (window.umami && window.umami.track) {
+                        window.umami.track("booking-start", { location: "inline-embed" });
+                      }
+                    } catch (e) {}
+                  }, 0);
+                });
+              })();
+            </script>
           </div>
 
           <aside class="space-y-5 lg:sticky lg:top-24">
@@ -70,7 +96,7 @@ const schemas = [
               </p>
             </div>
 
-            <a href="tel:+18015164149" class="block bg-white text-brand-black p-5 hover:translate-y-[-3px] transition-transform">
+            <a href="tel:+18015164149" class="block bg-white text-brand-black p-5 hover:translate-y-[-3px] transition-transform" data-umami-event="cta-call" data-umami-event-location="page-body">
               <div class="font-mono text-[10px] tracking-widest">OR CALL / TEXT</div>
               <div class="display italic text-2xl mt-1">(801) 516-4149</div>
               <div class="font-mono text-xs mt-1.5 text-ink/70">If you'd rather skip the form.</div>
