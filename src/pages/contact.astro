@@ -78,6 +78,12 @@ const schemas = [
                       if (window.umami && window.umami.track) {
                         window.umami.track("booking-start", { location: "inline-embed" });
                       }
+                      /* GA4 mirror, outside the Umami guard so a visitor who
+                         blocks one analytics layer is still counted by the
+                         other. GA4 names cannot contain hyphens. */
+                      if (typeof window.gtag === "function") {
+                        window.gtag("event", "booking_start", { link_location: "inline-embed" });
+                      }
                     } catch (e) {}
                   }, 0);
                 });

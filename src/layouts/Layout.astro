@@ -40,6 +40,35 @@ const allSchemas = [localBusinessSchema, websiteSchema, ...schemas];
       gtag('js', new Date());
       gtag('config', 'G-WPDT3JQ0VL');
     </script>
+    <!-- GA4 conversion events (ga4-contact-events). Mirrors the Umami layer so both
+         dashboards agree on what counts as a conversion. Keyed off the href
+         SCHEME rather than the data-umami-event attribute, so it still fires on
+         a contact link the Umami tagger never reached, and so neither analytics
+         layer depends on the other. GA4 event names cannot contain hyphens,
+         hence the underscore forms. link_location must be registered as a
+         custom dimension in GA4 or it will not appear in reports. -->
+    <script is:inline>
+      (function () {
+        var MAP = { "tel:": "phone_click", "sms:": "text_click", "mailto:": "email_click" };
+        document.addEventListener(
+          "click",
+          function (e) {
+            var a = e.target && e.target.closest ? e.target.closest("a[href]") : null;
+            if (!a) return;
+            var href = a.getAttribute("href") || "";
+            var name = MAP[href.slice(0, href.indexOf(":") + 1).toLowerCase()];
+            /* window.gtag, not a bare gtag: on some layouts the tag is assigned
+               rather than declared, and this block may outlive that. */
+            if (!name || typeof window.gtag !== "function") return;
+            window.gtag("event", name, {
+              link_location: a.getAttribute("data-umami-event-location") || "unknown"
+            });
+          },
+          true
+        );
+      })();
+    </script>
+
 
     {/* Umami analytics, self-hosted. Reports bounce rate, visit duration and events, which Cloudflare Web Analytics cannot because it is cookieless with no sessions. */}
     <script defer is:inline src="https://analytics.ghost000.com/script.js" data-website-id="eb393471-3454-44ec-8bc4-2351c70ce2a1"></script>
