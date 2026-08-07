@@ -1,4 +1,12 @@
 # Cloudflare Pages redirects
 
+# www -> apex canonicalization. Both hostnames are proxied to this same
+# Pages project (DNS confirmed 2026-08-07), so www was serving a live 200
+# duplicate of every page instead of consolidating to the canonical apex
+# domain used in astro.config.mjs `site:` and every <link rel="canonical">.
+# The canonical tag alone told search engines which copy to prefer; this
+# 301 stops the duplicate hostname from being crawled/indexed at all.
+https://www.neighborhoodhaulingut.com/*  https://neighborhoodhaulingut.com/:splat  301
+
 # Crawlers commonly request /sitemap.xml — Astro generates /sitemap-index.xml
 /sitemap.xml                        /sitemap-index.xml                         301
