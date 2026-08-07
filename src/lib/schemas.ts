@@ -16,8 +16,11 @@ export const localBusinessSchema = {
   telephone: "+1-801-516-4149",
   email: "team@neighborhoodhaulingut.com",
   priceRange: "$$",
-  image: `${SITE}/favicon.svg`,
-  logo: `${SITE}/favicon.svg`,
+  // Google's structured-data guidelines explicitly disallow SVG for the
+  // Organization/LocalBusiness `logo` field (JPEG/PNG/GIF only) — use the
+  // real raster wordmark instead of the favicon.svg placeholder.
+  image: `${SITE}/logo-color.jpg`,
+  logo: `${SITE}/logo-color.jpg`,
   paymentAccepted: ["Cash", "Credit Card", "Venmo", "Zelle"],
   currenciesAccepted: "USD",
   knowsAbout: [
@@ -74,7 +77,7 @@ export const localBusinessSchema = {
   // local SEO, and pairs the GBP rating signals with the site domain.
   sameAs: [
     "https://maps.app.goo.gl/oN3CrLU3eVEZMi6V9", // Google Business Profile
-    "http://neighborhoodbarbersutah.com",
+    "https://neighborhoodbarbersutah.com",
   ],
 };
 
