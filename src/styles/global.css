@@ -21,6 +21,16 @@
     color: white;
     -webkit-font-smoothing: antialiased;
   }
+  /* Reserve exactly the fixed CTA band's height so it never covers the footer's last
+     line: 44px links + 2px top border + the home indicator. Matches the band's own
+     lg:hidden breakpoint (64rem). Written as plain CSS rather than a pb-* utility on
+     <body> because Tailwind's extractor emits NO rule for an arbitrary value of this
+     shape, which fails silently — the class sits in the markup looking applied while
+     dist/ carries no padding at all. The old pb-20 was 80px for a 58px band and
+     counted neither the border nor the safe-area inset. */
+  @media (max-width: 63.999rem) {
+    body { padding-bottom: calc(46px + env(safe-area-inset-bottom, 0px)); }
+  }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 400;

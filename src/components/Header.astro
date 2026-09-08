@@ -250,25 +250,28 @@ const mLink = "block display italic text-3xl py-3 hover:text-brand-yellow transi
 </div>
 
 <style>
-  /* Direction-aware slim-on-scroll — portfolio-standard header behavior.
-     Transition padding + logo + background, never height/display (anti-jank). */
-  .nav-row { transition: padding 0.18s ease; }
-  #site-header .logo { transition: height 0.18s ease; }
-  #site-header { transition: background-color 0.18s ease, box-shadow 0.18s ease; }
+  /* Direction-aware HIDE-on-scroll, replacing slim-on-scroll. A permanent top bar
+     stacked on the fixed bottom CTA band ate both edges of a phone screen, so the
+     header now leaves entirely on scroll-down and returns on scroll-up.
 
-  :global(html.header-slim) .nav-row { padding-top: 0.4rem; padding-bottom: 0.4rem; }
-  :global(html.header-slim) #site-header .logo { height: 2.25rem; }
-  :global(html.header-slim) #site-header {
-    background-color: rgba(10, 10, 10, 0.8);
-    box-shadow: 0 1px 0 rgba(255, 212, 0, 0.18);
-  }
+     Hidden with a TRANSFORM, never padding, height or the logo's size. Those are all
+     layout properties, so the old version changed document height, which nudged
+     scrollY, which fed straight back into its own direction test — that is what the
+     old COOLDOWN=320 was absorbing, and it is deleted rather than ported. A transform
+     is compositor-only, so the loop is gone by construction, and the bar is either
+     fully present or fully gone, so it can never move a tap target mid-tap.
 
-  /* keyboard focus into the nav forces it full + solid (never focus a shrinking target) */
-  :global(html.header-slim) #site-header:focus-within .nav-row { padding-top: 1rem; padding-bottom: 1rem; }
-  :global(html.header-slim) #site-header:focus-within .logo { height: 3.5rem; }
-  :global(html.header-slim) #site-header:focus-within { background-color: rgb(10, 10, 10); }
+     Note this header carries backdrop-blur, so it has ALWAYS been the containing block
+     for any position:fixed descendant, and the transform below is a second reason for
+     that. #mobile-menu (fixed inset-0) is already a SIBLING of <header>, which is the
+     only reason the drawer covers the viewport instead of opening as a ~72px strip.
+     Keep it outside the header. */
+  #site-header { transition: transform 0.2s ease, background-color 0.18s ease, box-shadow 0.18s ease; }
+  :global(html[data-header="hidden"]) #site-header { transform: translateY(-100%); }
+  /* Never translate while the drawer is open, or an open menu rides off with it. */
+  :global(html[data-menu-open]) #site-header { transform: none !important; }
 
-  /* in-page #anchor jumps (e.g. FAQ) land below the sticky bar, sized to the slim height */
+  /* in-page #anchor jumps (e.g. FAQ) land below the header at its full height */
   :global(html) { scroll-padding-top: 5rem; }
 
   /* mobile collapsible submenus (start collapsed per the mobile-menu SOP) */
@@ -301,7 +304,10 @@ const mLink = "block display italic text-3xl py-3 hover:text-brand-yellow transi
     menu.classList.toggle("hidden", !open);
     // Scroll-lock on <html>, NOT <body> (body lock + overflow-x guard un-sticks the header).
     root.classList.toggle("overflow-hidden", open);
+    root.toggleAttribute("data-menu-open", open);
     btnOpen.setAttribute("aria-expanded", String(open));
+    // The header must never be mid-hide behind an open drawer.
+    if (open) root.setAttribute("data-header", "shown");
   };
 
   btnOpen?.addEventListener("click", () => setOpen(true));
@@ -312,34 +318,51 @@ const mLink = "block display italic text-3xl py-3 hover:text-brand-yellow transi
     if (e.key === "Escape" && menu && !menu.classList.contains("hidden")) setOpen(false);
   });
 
-  // --- Direction-aware slim-on-scroll ---
-  const DELTA = 6;       // ignore scroll jitter below this many px
-  const TOP_FULL = 64;   // always full within this many px of the top
-  const COOLDOWN = 320;  // absorb the slim-reflow self-nudge after a toggle
-  let lastY = Math.max(0, window.scrollY);
+  // --- Direction-aware HIDE-on-scroll → html[data-header="hidden"|"shown"] ---
+  //
+  // Replaces slim-on-scroll, which animated padding and the logo's height. Those are
+  // layout properties, so the header changed document height, which nudged scrollY,
+  // which fed straight back into the direction test below — that is what COOLDOWN=320
+  // was absorbing. The header now hides with a transform (see the style block), which
+  // costs no layout, so the loop is gone by construction and COOLDOWN, lastToggle and
+  // the transitionend height-sync are deleted rather than ported. Do not reintroduce a
+  // cooldown: it would delay the reveal on scroll-up, which is the point of the pattern.
+  const DELTA = 6;        // ignore scroll jitter below this many px
+  const TOP_ALWAYS = 64;  // always shown within this many px of the top
+  let lastY = 0;
   let ticking = false;
-  let lastToggle = 0;
 
-  const setSlim = (on: boolean) => {
-    if (root.classList.contains("header-slim") !== on) {
-      root.classList.toggle("header-slim", on);
-      lastToggle = performance.now();
-    }
+  // Clamp BOTH ends. iOS rubber-banding reports a negative scrollY at the top and a
+  // scrollY past the document height at the bottom; unclamped, both read as travel and
+  // flicker the header. The old code clamped only the low end.
+  const clampY = () => {
+    const max = Math.max(0, root.scrollHeight - window.innerHeight);
+    return Math.min(Math.max(0, window.scrollY), max);
+  };
+  const setHidden = (on: boolean) => {
+    const want = on ? "hidden" : "shown";
+    if (root.getAttribute("data-header") !== want) root.setAttribute("data-header", want);
   };
   const update = () => {
     ticking = false;
-    const y = Math.max(0, window.scrollY);            // clamp iOS overscroll
-    if (y <= TOP_FULL) { setSlim(false); lastY = y; return; }
-    if (performance.now() - lastToggle < COOLDOWN) { lastY = y; return; }
-    if (Math.abs(y - lastY) > DELTA) { setSlim(y > lastY); lastY = y; }
+    const y = clampY();
+    if (menu && !menu.classList.contains("hidden")) { lastY = y; return; }               // drawer open
+    if (header?.contains(document.activeElement)) { setHidden(false); lastY = y; return; } // keyboard focus
+    if (y <= TOP_ALWAYS) { setHidden(false); lastY = y; return; }                        // top of page
+    if (Math.abs(y - lastY) > DELTA) { setHidden(y > lastY); lastY = y; }
   };
 
   addEventListener("scroll", () => {
     if (!ticking) { ticking = true; requestAnimationFrame(update); }
   }, { passive: true });
+  // Never focus something that is off-screen: keyboard focus inside the header shows it.
+  addEventListener("focusin", () => { if (header?.contains(document.activeElement)) setHidden(false); });
+  // --header-h stays published for anything that wants to sit below the header. The
+  // height is constant while scrolling now, so load and resize are the only triggers.
   addEventListener("resize", syncH, { passive: true });
-  header?.addEventListener("transitionend", syncH);
   addEventListener("load", syncH);
   syncH();
+  lastY = clampY();
+  root.setAttribute("data-header", "shown");
   update();   // set correct state on load (deep-link / reload mid-page)
 </script>
