@@ -1,4 +1,5 @@
 import type { Service } from "../data/services";
+import { site } from "../data/site";
 
 const SITE = "https://neighborhoodhaulingut.com";
 const BUSINESS_ID = `${SITE}/#business`;
@@ -13,8 +14,8 @@ export const localBusinessSchema = {
   description:
     "Locally owned junk removal and hauling along the Wasatch Front. Same-day pickups, upfront pricing, eco-friendly disposal.",
   url: SITE,
-  telephone: "+1-801-516-4149",
-  email: "team@neighborhoodhaulingut.com",
+  telephone: site.phoneSchema,
+  email: site.email,
   priceRange: "$$",
   // Google's structured-data guidelines explicitly disallow SVG for the
   // Organization/LocalBusiness `logo` field (JPEG/PNG/GIF only) — use the

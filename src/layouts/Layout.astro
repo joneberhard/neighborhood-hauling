@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
 import { localBusinessSchema, websiteSchema } from "../lib/schemas";
+import { site } from "../data/site";
 
 interface Props {
   title?: string;
@@ -129,19 +130,37 @@ const allSchemas = [localBusinessSchema, websiteSchema, ...schemas];
          explicit choice over an animated one. Nothing in JS touches this element.
          The safe-area padding is new — without it the home indicator sat on the links. -->
     <div class="lg:hidden fixed bottom-0 left-0 right-0 z-40 grid grid-cols-[1fr_auto] gap-px bg-brand-black border-t-2 border-brand-yellow shadow-[0_-8px_24px_rgba(0,0,0,0.4)]" style="padding-bottom: env(safe-area-inset-bottom, 0px);">
+      {/* Both icons come from the estate's canonical set and share one wrapper:
+          same 18px box, same stroke weight, both stroked rather than one
+          stroked and one filled. Strokes are currentColor so each follows its
+          own link colour — the quote icon reads black on yellow, the call icon
+          yellow on black, from the same markup.
+
+          The quote icon used to be the speech bubble, which across this
+          portfolio means SMS. Pointing it at /contact made one shape mean two
+          different things depending on the site, so it is now file-text.
+
+          The call link was icon-only while its neighbour was fully labelled,
+          which left a bare handset with nothing naming it. It now says "Call".
+          That widens the auto column, and "SEND PHOTO · FREE QUOTE" at text-sm
+          tracking-widest was already close to the edge of a 320px screen, so
+          the type steps down to text-xs below the sm breakpoint. whitespace-
+          nowrap is there so that if it ever does run out of room it clips
+          rather than wrapping to a second line and growing the whole band. */}
       <a
         href="/contact"
-        class="bg-brand-yellow text-brand-black font-mono font-bold text-sm tracking-widest uppercase flex items-center justify-center gap-2 py-2.5 min-h-11 hover:bg-brand-yellow/90 transition-colors"
+        class="bg-brand-yellow text-brand-black font-mono font-bold text-xs tracking-wider sm:text-sm sm:tracking-widest uppercase whitespace-nowrap flex items-center justify-center gap-2 px-2 py-2.5 min-h-11 hover:bg-brand-yellow/90 transition-colors"
       >
-        <svg viewBox="0 0 24 24" class="w-4 h-4 shrink-0" fill="currentColor" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2zM8 9h8M8 13h5" stroke="#0a0a0a" stroke-width="2" fill="none"/></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="shrink-0"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
         Send Photo &middot; Free Quote
       </a>
       <a
-        href="tel:+18015164149"
-        aria-label="Call Neighborhood Hauling"
-        class="bg-brand-black text-brand-yellow flex items-center justify-center px-6 py-2.5 min-h-11 hover:bg-brand-yellow/10 transition-colors"
+        href={`tel:${site.phoneE164}`}
+        aria-label={`Call ${site.shortName} at ${site.phoneDisplay}`}
+        class="bg-brand-black text-brand-yellow font-mono font-bold text-xs tracking-wider sm:text-sm sm:tracking-widest uppercase whitespace-nowrap flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 min-h-11 hover:bg-brand-yellow/10 transition-colors"
        data-umami-event="cta-call" data-umami-event-location="sticky-bar">
-        <svg viewBox="0 0 24 24" class="w-6 h-6" fill="currentColor" aria-hidden="true"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.6 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false" class="shrink-0"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+        Call
       </a>
     </div>
 
