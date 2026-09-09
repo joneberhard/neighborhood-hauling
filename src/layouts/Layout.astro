@@ -111,20 +111,25 @@ const allSchemas = [localBusinessSchema, websiteSchema, ...schemas];
 
     <title>{title}</title>
   </head>
-  <!-- The room reserved for the fixed CTA band lives in global.css @layer base rather
-       than a pb-* utility here: it needs calc(46px + env(safe-area-inset-bottom)) and
-       Tailwind emits no rule for an arbitrary value of that shape. NOTE: this must be
-       an HTML comment, not {/* … */} — an Astro expression comment in this position
-       (between </head> and <body>) is emitted into the page as literal TEXT, verified
-       in dist/. -->
+  <!-- The room reserved for the fixed CTA band lives in global.css, unlayered, rather
+       than a pb-* utility here: it needs calc(2.75rem + 2px + env(safe-area-inset-bottom))
+       and Tailwind emits no rule for an arbitrary value of that shape. The reserve is
+       REM because the band's height is — see the comment on that rule before changing
+       either. NOTE: this must be an HTML comment, not {/* … */} — an Astro expression
+       comment in this position (between </head> and <body>) is emitted into the page as
+       literal TEXT, verified in dist/. -->
   <body class="bg-brand-black text-white font-mono">
     <slot />
 
     <!-- Fixed mobile CTA band — form-first primary, call secondary. Hidden on desktop.
          PERMANENTLY SLIMMER, never animated: py-4 around a 24px icon made these 56px
          links and a 58px band, which is a lot of a phone screen to give up for good.
-         py-2.5 + min-h-11 pins both links at exactly 44px, so the band is 46px — about
-         21% back. 44px is the floor because it is the minimum tappable height, and the
+         py-2.5 + min-h-11 pins both links at exactly 2.75rem, so the band is 2.75rem +
+         the 2px border — 46px at a 16px root, about 21% back, but REM-relative, so it
+         grows with the visitor's text size (90px at root 32) and the body reserve in
+         global.css is written in the same unit to follow it. Do not restate either as a
+         flat pixel number. 2.75rem is the floor because 44px is the minimum tappable
+         height at the default root size, and the
          band must NOT resize or hide on scroll: a tap target that moves while you reach
          for it is a recorded defect in this estate, and a constant slimmer band was the
          explicit choice over an animated one. Nothing in JS touches this element.

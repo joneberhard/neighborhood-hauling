@@ -21,20 +21,44 @@
     color: white;
     -webkit-font-smoothing: antialiased;
   }
-  /* Reserve exactly the fixed CTA band's height so it never covers the footer's last
-     line: 44px links + 2px top border + the home indicator. Matches the band's own
-     lg:hidden breakpoint (64rem). Written as plain CSS rather than a pb-* utility on
-     <body> because Tailwind's extractor emits NO rule for an arbitrary value of this
-     shape, which fails silently — the class sits in the markup looking applied while
-     dist/ carries no padding at all. The old pb-20 was 80px for a 58px band and
-     counted neither the border nor the safe-area inset. */
-  @media (max-width: 63.999rem) {
-    body { padding-bottom: calc(46px + env(safe-area-inset-bottom, 0px)); }
-  }
   h1, h2, h3, h4 {
     font-family: var(--font-display);
     font-weight: 400;
     letter-spacing: 0.01em;
+  }
+}
+
+/* Room for the fixed CTA band so it never covers the footer's last line.
+   THE RESERVE MUST BE REM, NOT PX. The band has no fixed height: two links at
+   min-h-11 (2.75rem) sitting under a border-t-2 (2px), so the band's height is
+   font-relative and grows the moment a visitor raises their browser's default
+   text size. Measured in headless Chrome at 390px — root 12/16/20/24/28/32 gives
+   a band of 35/46/57/68/79/90px, i.e. exactly 2.75rem + 2px at every step.
+   The old reserve was a flat 46px, which is only correct at a 16px root. At
+   root 24 the band was 68px over a 46px reserve, so the footer went straight
+   back under it — hitting precisely the readers who enlarge their text.
+   env(safe-area-inset-bottom) is added ON TOP rather than folded in, because
+   the band applies the same inset to its own padding; 2.75rem + 2px is the
+   band's height BEFORE the inset, so the two track instead of double-counting.
+   The media query matches the band's own lg:hidden IN THE SAME UNIT (64rem).
+   A px complement such as 1023.98px is only the complement of 64rem at a 16px
+   root and would leave a live hole at every other root size.
+   Written as plain CSS OUTSIDE every layer, not a pb-* utility on <body>, for
+   two separate reasons that both fail silently: Tailwind's extractor emits NO
+   rule at all for an arbitrary value of this shape (the class sits in the markup
+   looking applied while dist/ carries no padding), and anything it did emit would
+   land in @layer utilities, which any unlayered declaration outranks. */
+@media (max-width: 63.999rem) {
+  body {
+    /* Parse-time floor. An engine with no env() support at all drops the calc
+       below at parse time, before the cascade, so this plain line survives and
+       applies instead of the reserve resetting to 0 and handing back the covered
+       footer. Measured in headless Chrome: the pair computes the floor, a lone
+       unparseable declaration computes 0px. It rescues a PARSE failure only — an
+       env() whose variable is merely undefined fails later, at computed-value
+       time, and resets to 0 no matter what precedes it. */
+    padding-bottom: calc(2.75rem + 2px);
+    padding-bottom: calc(2.75rem + 2px + env(safe-area-inset-bottom, 0px));
   }
 }
 
