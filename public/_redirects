@@ -10,3 +10,8 @@ https://www.neighborhoodhaulingut.com/*  https://neighborhoodhaulingut.com/:spla
 
 # Crawlers commonly request /sitemap.xml — Astro generates /sitemap-index.xml
 /sitemap.xml                        /sitemap-index.xml                         301
+
+# Search Console + Bing audit, 2026-09-26
+# (ghost-zero-toolkit/_playbooks/seo-console-fixes-2026-09-26.md)
+/privacy-policy                     /privacy/                                  301
+/privacy-policy/                    /privacy/                                  301
